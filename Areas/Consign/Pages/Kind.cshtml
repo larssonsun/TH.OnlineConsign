@@ -1,0 +1,25 @@
+@page "{handler}"
+@model KindPageModel
+@{
+    ViewData["Title"] = "Home page";
+}
+@section Stylesheet{
+    <style type="text/css">
+        .card-columns {
+            column-count: 6;
+        }
+    </style>
+}
+<div class="card-columns">
+@foreach (var kind in Model.Kinds)
+{
+    var commonly = (new int[] { 11, 13 }).Any(x => x == kind.KindId);
+    <div class="card border-secondary">
+        <div class="card-header"><small class="text-muted">最后收样 3 mins ago</small></div>
+        <div class="card-body @if(commonly){@("bg-secondary text-white")}">
+            <h5 class="card-title text-center">@kind.KindName</h5>
+            <p class="card-text">@kind.KindDescription</p>
+        </div>
+    </div>
+}
+</div>

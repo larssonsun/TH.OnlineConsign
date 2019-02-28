@@ -37,7 +37,7 @@ namespace th.onlineconsign
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("LMISOnlineConsign")));
              
             // services.AddDbContext<Model.ItemSoureDbContext>(options =>
             //     options.UseSqlServer(
