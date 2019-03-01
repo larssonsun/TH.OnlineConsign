@@ -44,6 +44,7 @@
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
+            @RenderSection("Breadcrumb", false)
             @RenderBody()
         </main>
     </div>

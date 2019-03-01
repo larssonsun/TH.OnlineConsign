@@ -6,12 +6,10 @@ namespace th.onlineconsign.Model
 {
     public partial class ItemDbContext : DbContext
     {
-        public ItemDbContext(DbContextOptions<ItemSoureDbContext> options) : base(options)
-        { }
-
         public ItemDbContext(DbContextOptions<ItemDbContext> options)
             : base(options)
         {
+            
         }
 
         public virtual DbSet<ItemItem> ItemItem { get; set; }
