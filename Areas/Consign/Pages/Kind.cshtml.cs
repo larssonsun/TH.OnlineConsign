@@ -17,7 +17,7 @@ public class KindPageModel : PageModel
 
     public async Task OnGetAsync()
     {
-        var q = db.ItemKind
+        Kinds = await db.ItemKind
         .Where(x => x.CanConsign == 1)
         .Select(x => new ItemKind
         {
@@ -25,10 +25,6 @@ public class KindPageModel : PageModel
             KindName = x.KindName,
             KindDescription = x.KindDescription
         })
-        .OrderBy(x => x.KindId);
-
-        System.Console.WriteLine(q.ToString());
-
-        Kinds = await q.ToListAsync();
+        .OrderBy(x => x.KindId).ToListAsync();
     }
 }

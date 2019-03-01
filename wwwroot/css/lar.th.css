@@ -1,0 +1,25 @@
+@media (min-width: 576px) {
+    .card-columns {
+        column-count: 4;
+    }
+}
+
+@media (min-width: 992px){
+    .card-columns {
+        column-count: 6;
+    }
+}
+
+body{
+    font-size:13px;
+}
+
+.lar a{
+    text-decoration:none;
+    color:Inherit
+}
+
+.lar .card-body:hover{
+    background-color:#ccc !important;
+    color:#fff !important;
+}

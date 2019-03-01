@@ -1,36 +1,10 @@
 @page "{handler}"
 @model KindPageModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "大类";
 }
 @section Stylesheet{
-    <style type="text/css">
-        @@media (min-width: 576px) {
-            .card-columns {
-                column-count: 4;
-            }
-        }
-
-        @@media (min-width: 992px){
-            .card-columns {
-                column-count: 6;
-            }
-        }
-
-        body{
-            font-size:13px;
-        }
-
-        .lar a{
-            text-decoration:none;
-            color:Inherit
-        }
-
-        .lar .card-body:hover{
-            background-color:#0077F6 !important;
-            color:#fff !important;
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/lar.th.css" />
 }
 
 @section Breadcrumb{
@@ -46,7 +20,7 @@
 {
     var commonly = (new int[] { 11, 13 }).Any(x => x == kind.KindId);
     <div class="card border-secondary text-center">
-        <a asp-page="/Index">
+        <a asp-page="/Item" asp-page-handler="@kind.KindId" asp-area="Consign">
         <div class="card-body @if(commonly){@("bg-secondary text-white")}">
             <h5 class="card-title">@kind.KindName</h5>
             <p class="card-text">@kind.KindDescription</p>

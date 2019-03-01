@@ -1,0 +1,51 @@
+@page "{handler}"
+@model ItemPageModel
+@{}
+
+@{
+    ViewData["Title"] = "项目";
+}
+@section Stylesheet{
+    <link rel="stylesheet" href="~/css/lar.th.css" />
+}
+
+@section Breadcrumb{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-page="/Index" asp-area="">首页</a></li>
+            <li class="breadcrumb-item"><a asp-page="/Kind" asp-page-handler="-1" asp-area="consign">大类</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.KindName</li>
+        </ol>
+    </nav>
+}
+
+<div class="row mb-4">
+    <div class="col-8"></div>
+    <div class="col-4">
+        <form method="post" asp-page-handler="searchitem">
+            <div class="input-group">
+                <input type="text" class="form-control w-25" placeholder="项目名称或者项目代码" aria-label="项目名称或者项目代码" 
+                aria-describedby="button-addon2" asp-for="SearchKey">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><span class="fas fa-search"></button>
+                </div>
+            </div>
+            <input type="hidden" asp-for="KindId">
+        </form>
+    </div>
+</div>
+
+<div class="card-columns pt-2 border-top lar">
+@foreach (var item in Model.Items)
+{
+    <div class="card border-secondary text-center">
+        <a asp-page="/Sample/@item.ItemId">
+        <div class="card-body">
+            <h5 class="card-title">@item.ItemName</h5>
+            <p class="card-text">@item.ItemDescription</p>
+        </div>
+        </a>
+        <div class="card-footer"><small class="text-muted">--</small></div>
+    </div>
+}
+</div>
