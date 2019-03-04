@@ -1,9 +1,7 @@
 @page "{handler}"
-@model ItemPageModel
-@{}
-
+@model SamplePageModel
 @{
-    ViewData["Title"] = "项目";
+    ViewData["Title"] = "样品";
 }
 @section Stylesheet{
     <link rel="stylesheet" href="~/css/lar.th.css" />
@@ -14,38 +12,39 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-page="/Index" asp-area="">首页</a></li>
             <li class="breadcrumb-item"><a asp-page="/Kind" asp-page-handler="-1" asp-area="consign">大类</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@Model.KindName</li>
+            <li class="breadcrumb-item"><a asp-page="/Item" asp-page-handler="@Model.ItemId.Substring(0, 2)" asp-area="consign">@Model.KindName</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.ItemName</li>
         </ol>
     </nav>
 }
 
 <div class="row mb-4">
-    <div class="col-3 mt-2"><h6>项目种类<span class="badge badge-secondary ml-2">@(Model.Items==null?0:Model.Items.Count())</span></h6></div>
+    <div class="col-3 mt-2"><h6>样品种类<span class="badge badge-secondary ml-2">@(Model.Samples==null?0:Model.Samples.Count())</span></h6></div>
     <div class="col-4"></div>
     <div class="col-5">
-        <form method="post" asp-page-handler="searchitem">
+        <form method="post" asp-page-handler="searchsample">
             <div class="input-group">
-                <input type="text" class="form-control w-25" placeholder="项目名称" aria-label="项目名称" 
+                <input type="text" class="form-control w-25" placeholder="样品名称" aria-label="样品名称" 
                 aria-describedby="button-addon2" asp-for="SearchKey">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><span class="fas fa-search"></button>
                 </div>
             </div>
-            <input type="hidden" asp-for="KindId">
+            <input type="hidden" asp-for="ItemId">
         </form>
     </div>
 </div>
 
 <div class="card-columns pt-2 border-top lar">
-@if(Model.Items != null)
+@if(Model.Samples != null)
 {
-    @foreach (var item in Model.Items)
+    @foreach (var sample in Model.Samples)
     {
         <div class="card border-secondary text-center">
-            <a asp-page="/Sample" asp-page-handler="@item.ItemId" asp-area="Consign">
+            <a asp-page="/SampleDetail" asp-page-handler="@sample.SampleId" asp-area="Consign">
             <div class="card-body">
-                <h5 class="card-title">@item.ItemName</h5>
-                <p class="card-text">@item.ItemDescription</p>
+                <h5 class="card-title">@sample.SampleName</h5>
+                <p class="card-text">@sample.SampleJudge</p>
             </div>
             </a>
             <div class="card-footer"><small class="text-muted">--</small></div>

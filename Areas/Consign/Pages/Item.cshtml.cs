@@ -19,7 +19,7 @@ public class ItemPageModel : PageModel
 
     public string KindName { get; set; }
 
-    [BindProperty(SupportsGet = true)]
+    [BindProperty]
     public string KindId { get; set; }
 
     [BindProperty]
@@ -41,10 +41,12 @@ public class ItemPageModel : PageModel
     public async Task InitPage(string kindId)
     {
         // get kindname
-        KindName = db.ItemKind.Single(x => x.KindId.ToString() == kindId).KindName;
+        KindName = await db.ItemKind
+        .Where(x => x.KindId.ToString() == kindId)
+        .Select(x => x.KindName).FirstAsync();
 
         // get items
-        var q = await db.ItemItem
+        Items = await db.ItemItem
         .Where(x => x.CanConsign == 1
             && x.KindId.ToString() == kindId
             && (SearchKey != null ? x.ItemName.Contains(SearchKey) : true))
@@ -55,7 +57,5 @@ public class ItemPageModel : PageModel
             ItemDescription = x.ItemDescription
         })
         .OrderBy(x => x.ItemId).ToListAsync();
-        Console.WriteLine(q.ToString());
-        Items = q;
     }
 }
