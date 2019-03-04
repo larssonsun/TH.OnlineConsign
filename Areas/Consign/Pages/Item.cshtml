@@ -24,7 +24,7 @@
     <div class="col-4">
         <form method="post" asp-page-handler="searchitem">
             <div class="input-group">
-                <input type="text" class="form-control w-25" placeholder="项目名称或者项目代码" aria-label="项目名称或者项目代码" 
+                <input type="text" class="form-control w-25" placeholder="项目名称" aria-label="项目名称" 
                 aria-describedby="button-addon2" asp-for="SearchKey">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><span class="fas fa-search"></button>
@@ -36,16 +36,19 @@
 </div>
 
 <div class="card-columns pt-2 border-top lar">
-@foreach (var item in Model.Items)
+@if(Model.Items != null)
 {
-    <div class="card border-secondary text-center">
-        <a asp-page="/Sample/@item.ItemId">
-        <div class="card-body">
-            <h5 class="card-title">@item.ItemName</h5>
-            <p class="card-text">@item.ItemDescription</p>
+    @foreach (var item in Model.Items)
+    {
+        <div class="card border-secondary text-center">
+            <a asp-page="/Sample/@item.ItemId">
+            <div class="card-body">
+                <h5 class="card-title">@item.ItemName</h5>
+                <p class="card-text">@item.ItemDescription</p>
+            </div>
+            </a>
+            <div class="card-footer"><small class="text-muted">--</small></div>
         </div>
-        </a>
-        <div class="card-footer"><small class="text-muted">--</small></div>
-    </div>
+    }
 }
 </div>

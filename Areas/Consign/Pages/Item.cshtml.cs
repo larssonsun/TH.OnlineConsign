@@ -30,19 +30,24 @@ public class ItemPageModel : PageModel
         if (KindId == null)
             KindId = RouteData.Values["handler"].ToString();
 
-        // route data
-        // if (RouteData.Values.Keys.Contains("search"))
-        //     SearchKey = RouteData.Values["search"].ToString();
-        Console.WriteLine($"----------------------------------------{SearchKey}");
+        await InitPage(KindId);
+    }
 
+    public async Task OnPostSearchItem()
+    {
+        await InitPage(KindId);
+    }
+
+    public async Task InitPage(string kindId)
+    {
         // get kindname
-        KindName = db.ItemKind.Single(x => x.KindId.ToString() == KindId).KindName;
+        KindName = db.ItemKind.Single(x => x.KindId.ToString() == kindId).KindName;
 
         // get items
         var q = await db.ItemItem
         .Where(x => x.CanConsign == 1
-            && x.KindId.ToString() == KindId
-            && x.ItemName.IndexOf(SearchKey) >= 0)
+            && x.KindId.ToString() == kindId
+            && (SearchKey != null ? x.ItemName.Contains(SearchKey) : true))
         .Select(x => new ItemItem
         {
             ItemId = x.ItemId,
@@ -52,10 +57,5 @@ public class ItemPageModel : PageModel
         .OrderBy(x => x.ItemId).ToListAsync();
         Console.WriteLine(q.ToString());
         Items = q;
-    }
-
-    public RedirectToPageResult OnPostSearchItem()
-    {
-        return RedirectToPage("Item", KindId, new { search = SearchKey });
     }
 }
