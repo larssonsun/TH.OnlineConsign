@@ -28,8 +28,7 @@ public class SamplePageModel : PageModel
 
     public async Task OnGetAsync()
     {
-        if (ItemId == null)
-            ItemId = RouteData.Values["handler"].ToString();
+        ItemId = RouteData.Values["handler"].ToString();
 
         var tuple = await InitPage(ItemId, null);
         KindName = tuple.Item1;

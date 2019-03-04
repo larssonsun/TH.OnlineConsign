@@ -1,0 +1,94 @@
+@page "{handler}"
+@model SampleDetailsPageModel
+@{
+    ViewData["Title"] = "样品详细信息";
+}
+@section Stylesheet{
+    <link rel="stylesheet" href="~/css/lar.th.css" />
+}
+
+@section Breadcrumb{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-page="/Index" asp-area="">首页</a></li>
+            <li class="breadcrumb-item"><a asp-page="/Kind" asp-page-handler="-1" asp-area="consign">大类</a></li>
+            <li class="breadcrumb-item"><a asp-page="/Item" asp-page-handler="@Model.SampleId.Substring(0, 2)" asp-area="consign">@Model.KindName</a></li>
+            <li class="breadcrumb-item"><a asp-page="/Sample" asp-page-handler="@Model.SampleId.Substring(0, 4)" asp-area="consign">@Model.ItemName</a></li>
+            <li class="breadcrumb-item active font-weight-bold" aria-current="page">@Model.SampleNameExt</li>
+        </ol>
+    </nav>
+}
+
+<div class="lar">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="samplespec">规格</label>
+                </div>
+                <select class="custom-select custom-select-sm" id="samplespec">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="samplegrade">强度/等级</label>
+                </div>
+                <select class="custom-select custom-select-sm" id="samplegrade">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-row mb-3">
+        <div class="col-12">
+            <div class="rounded list-frame-title">检测参数</div>
+            <div class="border rounded scroll-checkbox-list-h100">  
+                <div class="custom-control custom-checkbox custom-control-inline">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-12">
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">备案证及生产厂家</label>
+                </div>
+                <select class="custom-select custom-select-sm" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+                <input type="text" class="form-control" aria-label="Text input with dropdown button">
+            </div>
+        </div>
+    </div>
+</div>

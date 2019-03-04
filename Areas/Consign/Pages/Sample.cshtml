@@ -23,8 +23,8 @@
     <div class="col-4"></div>
     <div class="col-5">
         <form method="post" asp-page-handler="searchsample">
-            <div class="input-group">
-                <input type="text" class="form-control w-25" placeholder="样品名称" aria-label="样品名称" 
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="样品名称" aria-label="样品名称" 
                 aria-describedby="button-addon2" asp-for="SearchKey">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><span class="fas fa-search"></button>
@@ -41,7 +41,7 @@
     @foreach (var sample in Model.Samples)
     {
         <div class="card border-secondary text-center">
-            <a asp-page="/SampleDetail" asp-page-handler="@sample.SampleId" asp-area="Consign">
+            <a asp-page="/SampleDetails" asp-page-handler="@sample.SampleId" asp-area="Consign">
             <div class="card-body">
                 <h5 class="card-title">@sample.SampleName</h5>
                 <p class="card-text">@sample.SampleJudge</p>

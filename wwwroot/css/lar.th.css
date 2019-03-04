@@ -23,3 +23,19 @@ body{
     background-color:#ccc !important;
     color:#fff !important;
 }
+
+.lar .scroll-checkbox-list-h100 {
+    height: 100px; 
+    overflow-y: scroll;
+    padding: 0.5rem
+}
+
+
+.lar .list-frame-title{
+    color:#000;
+    border:solid #CED4DA 1px;
+    border-bottom-width: 0;
+    background-color:#E9ECEF;
+    font-weight: normal;
+    padding: 5px;
+}
