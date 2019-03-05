@@ -6,7 +6,9 @@
 @section Stylesheet{
     <link rel="stylesheet" href="~/css/lar.th.css" />
 }
-
+@section Scripts{
+    <script src="~/js/sampledetails.cshtml.js" asp-append-version="true"></script>
+}
 @section Breadcrumb{
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -19,6 +21,7 @@
     </nav>
 }
 
+<input id="hiddenSampleId" type="hidden" value="@Model.SampleId">
 <div class="lar">
     <div class="form-row">
         <div class="col-6">
@@ -26,11 +29,8 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="samplespec">规格</label>
                 </div>
-                <select class="custom-select custom-select-sm" id="samplespec">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select class="custom-select custom-select-sm" id="samplespec" asp-items="Model.Specs">
+                    <option selected>请选择...</option>
                 </select>
             </div>
         </div>
@@ -39,11 +39,8 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="samplegrade">强度/等级</label>
                 </div>
-                <select class="custom-select custom-select-sm" id="samplegrade">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select class="custom-select custom-select-sm" id="samplegrade" asp-items="Model.Grades">
+                    <option selected>请选择...</option>
                 </select>
             </div>
         </div>
@@ -52,26 +49,13 @@
         <div class="col-12">
             <div class="rounded list-frame-title">检测参数</div>
             <div class="border rounded scroll-checkbox-list-h100">  
+                @foreach (var parm in Model.Parameters)
+                {
                 <div class="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                    <input type="checkbox" class="custom-control-input" id="chkparm_@parm.ParameterId" @if(parm.IsDefault.Value){@("Checked")}>
+                    <label class="custom-control-label" for="chkparm_@parm.ParameterId">@parm.ParameterName</label>
                 </div>
-                <div class="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control">
-                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control">
-                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                </div>
+                }
             </div>
         </div>
     </div>
@@ -81,13 +65,17 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">备案证及生产厂家</label>
                 </div>
-                <select class="custom-select custom-select-sm" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+
+                <input type="text" class="form-control" id="searchProductorSearchKey" placeholder="关键字" aria-label="Text input with dropdown button">
+
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary" id="searchProductor" type="button">搜索</button>
+                </div>
+
+                <select class="custom-select custom-select-sm" id="productorSource" >
+                    <option selected>请选择...</option>
                 </select>
-                <input type="text" class="form-control" aria-label="Text input with dropdown button">
+                <input type="text" class="form-control w-30" id="productorName" placeholder="生产厂家名称" aria-label="Text input with dropdown button" readonly>
             </div>
         </div>
     </div>

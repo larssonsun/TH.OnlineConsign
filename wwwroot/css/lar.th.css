@@ -39,3 +39,7 @@ body{
     font-weight: normal;
     padding: 5px;
 }
+
+.lar .w-30 {
+    width:30% !important;
+}

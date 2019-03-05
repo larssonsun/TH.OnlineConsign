@@ -17,6 +17,8 @@ namespace th.onlineconsign.Model
         public virtual DbSet<ItemGrade> ItemGrade { get; set; }
         public virtual DbSet<ItemParameter> ItemParameter { get; set; }
         public virtual DbSet<ItemSpec> ItemSpec { get; set; }
+        public virtual DbSet<DpProductionUnitType> DpProductionUnitType { get; set; }
+        public virtual DbSet<UnitProductionUnit> UnitProductionUnit { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -263,6 +265,105 @@ namespace th.onlineconsign.Model
                 entity.Property(e => e.SpecName).HasMaxLength(64);
 
                 entity.Property(e => e.SpecType).HasMaxLength(32);
+            });
+
+            modelBuilder.Entity<DpProductionUnitType>(entity =>
+            {
+                entity.ToTable("DP_ProductionUnitType");
+
+                entity.HasIndex(e => e.ItemId)
+                    .HasName("IX_DP_ProductionUnitType");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .HasMaxLength(64)
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.ItemId).HasColumnName("ItemID");
+
+                entity.Property(e => e.TypeCode)
+                    .IsRequired()
+                    .HasMaxLength(512);
+
+                entity.Property(e => e.TypeName)
+                    .IsRequired()
+                    .HasMaxLength(512);
+            });
+
+            modelBuilder.Entity<UnitProductionUnit>(entity =>
+            {
+                entity.HasKey(e => e.ProductionUnitId)
+                    .HasName("PK_Public_Unit_ProductionUnit");
+
+                entity.ToTable("Unit_ProductionUnit");
+
+                entity.HasIndex(e => e.ProductionUnitId)
+                    .HasName("IX_Unit_ProductionUnit_2");
+
+                entity.HasIndex(e => e.PutOnRecordsPassport)
+                    .HasName("IX_Unit_ProductionUnit_3");
+
+                entity.Property(e => e.ProductionUnitId)
+                    .HasColumnName("ProductionUnitID")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.Address).HasMaxLength(512);
+
+                entity.Property(e => e.Bindlicences).HasMaxLength(128);
+
+                entity.Property(e => e.Fax)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LegalPerson).HasMaxLength(32);
+
+                entity.Property(e => e.LinkMan).HasMaxLength(32);
+
+                entity.Property(e => e.LinkManPhone)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LinkPhone)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(128);
+
+                entity.Property(e => e.Orders)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ProductionUnitType)
+                    .IsRequired()
+                    .HasMaxLength(64);
+
+                entity.Property(e => e.PutOnRecordsPassport).HasMaxLength(128);
+
+                entity.Property(e => e.RecordsPassportOrdersPart1)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RecordsPassportOrdersPart2)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RecordsPassportOrdersPart3)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SurfaceFlagPicture).HasColumnType("image");
+
+                entity.Property(e => e.SurfaceFlagText)
+                    .HasMaxLength(32)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UnitId).HasColumnName("UnitID");
+
+                entity.Property(e => e.ZipCode)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
             });
 
         }
