@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     var productorSel = $("#productorSource");
     var productorNameTxt = $("#productorName");
-    // TODO:js / 2019-03-05 14:51 / should addd searchkey validate
+    // TODO: js / 2019-03-05 14:51 / should addd searchkey validate
     var validateSearchProductor = function () {
         return true;
     };

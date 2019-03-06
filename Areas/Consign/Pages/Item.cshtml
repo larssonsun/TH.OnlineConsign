@@ -11,7 +11,7 @@
 
 @section Breadcrumb{
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb lar-breadcrumb">
             <li class="breadcrumb-item"><a asp-page="/Index" asp-area="">首页</a></li>
             <li class="breadcrumb-item"><a asp-page="/Kind" asp-page-handler="-1" asp-area="consign">大类</a></li>
             <li class="breadcrumb-item active" aria-current="page">@Model.KindName</li>
@@ -42,7 +42,7 @@
     @foreach (var item in Model.Items)
     {
         <div class="card border-secondary text-center">
-            <a asp-page="/Sample" asp-page-handler="@item.ItemId" asp-area="Consign">
+            <a class="lar-a" asp-page="/Sample" asp-page-handler="@item.ItemId" asp-area="Consign">
             <div class="card-body">
                 <h5 class="card-title">@item.ItemName</h5>
                 <p class="card-text">@item.ItemDescription</p>

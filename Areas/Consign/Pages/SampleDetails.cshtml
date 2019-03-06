@@ -11,7 +11,7 @@
 }
 @section Breadcrumb{
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb lar-breadcrumb">
             <li class="breadcrumb-item"><a asp-page="/Index" asp-area="">首页</a></li>
             <li class="breadcrumb-item"><a asp-page="/Kind" asp-page-handler="-1" asp-area="consign">大类</a></li>
             <li class="breadcrumb-item"><a asp-page="/Item" asp-page-handler="@Model.SampleId.Substring(0, 2)" asp-area="consign">@Model.KindName</a></li>
@@ -22,16 +22,17 @@
 }
 
 <input id="hiddenSampleId" type="hidden" value="@Model.SampleId">
-<div class="lar">
+<div>
     <div class="form-row">
         <div class="col-6">
             <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="samplespec">规格</label>
                 </div>
-                <select class="custom-select custom-select-sm" id="samplespec" asp-items="Model.Specs">
+                <select class="custom-select custom-select-sm @Model.ShowSpecSelect" id="samplespec" asp-items="Model.Specs">
                     <option selected>请选择...</option>
                 </select>
+                <input type="text" class="form-control @Model.ShowSpecManual" id="samplespecManual" placeholder="请输入" aria-label="规格">
             </div>
         </div>
         <div class="col-6">
@@ -39,9 +40,10 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="samplegrade">强度/等级</label>
                 </div>
-                <select class="custom-select custom-select-sm" id="samplegrade" asp-items="Model.Grades">
+                <select class="custom-select custom-select-sm @Model.ShowGradeSelect" id="samplegrade" asp-items="Model.Grades">
                     <option selected>请选择...</option>
                 </select>
+                <input type="text" class="form-control @Model.ShowGradeManual" id="samplegradeManual" placeholder="请输入" aria-label="强度/等级">
             </div>
         </div>
     </div>
@@ -63,19 +65,41 @@
         <div class="col-12">
             <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">备案证及生产厂家</label>
+                    <label class="input-group-text" for="productorName">备案证及生产厂家</label>
                 </div>
 
-                <input type="text" class="form-control" id="searchProductorSearchKey" placeholder="关键字" aria-label="Text input with dropdown button">
+                <input type="text" class="form-control @Model.ShowProductorSelect" id="searchProductorSearchKey" placeholder="关键字" aria-label="关键字">
 
-                <div class="input-group-prepend">
+                <div class="input-group-prepend @Model.ShowProductorSelect">
                     <button class="btn btn-outline-secondary" id="searchProductor" type="button">搜索</button>
                 </div>
 
-                <select class="custom-select custom-select-sm" id="productorSource" >
+                <select class="custom-select custom-select-sm @Model.ShowProductorSelect" id="productorSource" >
                     <option selected>请选择...</option>
                 </select>
-                <input type="text" class="form-control w-30" id="productorName" placeholder="生产厂家名称" aria-label="Text input with dropdown button" readonly>
+                <input type="text" class="form-control w-30" id="productorName" 
+                    placeholder="生产厂家名称" aria-label="生产厂家" @Model.ReadonlyProductorManual>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="sampleDeleQuan">代表数量</label>
+                </div>
+                <input type="number" min="0" class="form-control" id="sampleDeleQuan" placeholder="请输入" aria-label="代表数量">
+                <select class="custom-select custom-select-sm" id="sampleDeleQuanUnit" asp-items="Model.DelegateQuanUnit">
+                    <option selected>请选择...</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="samplegrade">使用部位</label>
+                </div>
+                <input type="text" class="form-control" id="samplegradeManual" placeholder="请输入" aria-label="使用部位">
             </div>
         </div>
     </div>

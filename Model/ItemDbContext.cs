@@ -19,6 +19,7 @@ namespace th.onlineconsign.Model
         public virtual DbSet<ItemSpec> ItemSpec { get; set; }
         public virtual DbSet<DpProductionUnitType> DpProductionUnitType { get; set; }
         public virtual DbSet<UnitProductionUnit> UnitProductionUnit { get; set; }
+        public virtual DbSet<DpDelegateQuanUnit> DpDelegateQuanUnit { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -366,6 +367,22 @@ namespace th.onlineconsign.Model
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<DpDelegateQuanUnit>(entity =>
+            {
+                entity.ToTable("DP_DelegateQuanUnit");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.Nam)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Val)
+                    .IsRequired()
+                    .HasMaxLength(255);
+            });
         }
     }
 }

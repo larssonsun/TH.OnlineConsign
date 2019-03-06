@@ -9,7 +9,7 @@
 
 @section Breadcrumb{
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb lar-breadcrumb">
             <li class="breadcrumb-item"><a asp-page="/Index" asp-area="">首页</a></li>
             <li class="breadcrumb-item"><a asp-page="/Kind" asp-page-handler="-1" asp-area="consign">大类</a></li>
             <li class="breadcrumb-item"><a asp-page="/Item" asp-page-handler="@Model.ItemId.Substring(0, 2)" asp-area="consign">@Model.KindName</a></li>
@@ -41,7 +41,7 @@
     @foreach (var sample in Model.Samples)
     {
         <div class="card border-secondary text-center">
-            <a asp-page="/SampleDetails" asp-page-handler="@sample.SampleId" asp-area="Consign">
+            <a class="lar-a" asp-page="/SampleDetails" asp-page-handler="@sample.SampleId" asp-area="Consign">
             <div class="card-body">
                 <h5 class="card-title">@sample.SampleName</h5>
                 <p class="card-text">@sample.SampleJudge</p>

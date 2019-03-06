@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using th.onlineconsign.Model;
 
-public class SampleDetailsPageModel : PageModel
+public class SampleDetailsPageModel : BasePageModel
 {
     ItemDbContext db;
     public SampleDetailsPageModel(ItemDbContext db)
@@ -30,9 +30,26 @@ public class SampleDetailsPageModel : PageModel
 
     public List<ItemParameter> Parameters { get; set; }
 
+    public SelectList DelegateQuanUnit { get; set; }
+
+    public ShowHideCssClass ShowSpecManual { get; set; }
+
+    public ShowHideCssClass ShowSpecSelect { get; set; }
+
+    public ShowHideCssClass ShowGradeManual { get; set; }
+
+    public ShowHideCssClass ShowGradeSelect { get; set; }
+
+    public ShowHideCssClass ShowProductorManual { get; set; }
+
+    public ShowHideCssClass ShowProductorSelect { get; set; }
+
+    public ReadonlyCssClass ReadonlyProductorManual { get; set; }
+
+
     public async Task OnGetAsync()
     {
-        // TODO: c# / 2019-03-05 16:27 / productor name editable ctl
+        // TODO: c# / 2019-03-06 10_52 / part of the steel bar sample here shows the record certificate and does not include the license
         SampleId = RouteData.Values["handler"].ToString();
         var tuple = await InitPage(SampleId, null);
         KindName = tuple.Item1;
@@ -41,7 +58,15 @@ public class SampleDetailsPageModel : PageModel
         Parameters = tuple.Item6;
         Specs = new SelectList(tuple.Item4, nameof(ItemSpec.SpecId), nameof(ItemSpec.SpecName), null, null);
         Grades = new SelectList(tuple.Item5, nameof(ItemGrade.GradeId), nameof(ItemGrade.GradeName), null, null);
-        
+        DelegateQuanUnit = new SelectList(tuple.Rest.Item1, nameof(DpDelegateQuanUnit.Nam), nameof(DpDelegateQuanUnit.Nam), null, null);
+
+        ShowSpecManual = Specs.Count() <= 0 ? ShowHideCssClass.show : ShowHideCssClass.hide;
+        ShowSpecSelect = Specs.Count() <= 0 ? ShowHideCssClass.hide : ShowHideCssClass.show;
+        ShowGradeManual = Grades.Count() <= 0 ? ShowHideCssClass.show : ShowHideCssClass.hide;
+        ShowGradeSelect = Grades.Count() <= 0 ? ShowHideCssClass.hide : ShowHideCssClass.show;
+        ShowProductorManual = tuple.Item7 ? ShowHideCssClass.show : ShowHideCssClass.hide;
+        ShowProductorSelect = tuple.Item7 ? ShowHideCssClass.hide : ShowHideCssClass.show;
+        ReadonlyProductorManual = tuple.Item7 ? ReadonlyCssClass.na : ReadonlyCssClass.ReadOnly;
     }
 
     public async Task<JsonResult> OnGetSearchProductor(string sampleId, string searchkey)
@@ -63,7 +88,8 @@ public class SampleDetailsPageModel : PageModel
         return new JsonResult(productors);
     }
 
-    private async Task<Tuple<string, string, string, List<ItemSpec>, List<ItemGrade>, List<ItemParameter>>> InitPage(string sampleId, string searchkey)
+    private async Task<Tuple<string, string, string, List<ItemSpec>, List<ItemGrade>, List<ItemParameter>, bool, Tuple<List<DpDelegateQuanUnit>>>> InitPage
+        (string sampleId, string searchkey)
     {
         // get kindname for breadcrumb
         var kindName = await db.ItemKind
@@ -102,7 +128,31 @@ public class SampleDetailsPageModel : PageModel
             .OrderBy(x => x.ParameterId)
             .ToListAsync();
 
-        return new Tuple<string, string, string, List<ItemSpec>, List<ItemGrade>, List<ItemParameter>>
-            (kindName, itemName, sampleNameExt, specs, grades, parms);
+        // check if there are manufacturer resources
+        var productorManual = true;
+        var typeCode = await db.DpProductionUnitType
+            .Where(x => x.ItemId.ToString() == sampleId)
+            .Select(x => x.TypeCode)
+            .FirstOrDefaultAsync();
+
+        if (!String.IsNullOrEmpty(typeCode))
+        {
+            var tmp = await db.UnitProductionUnit
+                .Where(x => x.ProductionUnitType == typeCode)
+                .Select(x => x.Name)
+                .CountAsync();
+
+            productorManual = tmp <= 0;
+        }
+
+        // get delegate quan unit
+        var deleQuanUnit = await db.DpDelegateQuanUnit
+            .Select(x => new DpDelegateQuanUnit { Nam = x.Nam, Ord = x.Ord.Value })
+            .OrderBy(x => x.Ord.Value)
+            .ToListAsync();
+
+
+        return new Tuple<string, string, string, List<ItemSpec>, List<ItemGrade>, List<ItemParameter>, bool, Tuple<List<DpDelegateQuanUnit>>>
+            (kindName, itemName, sampleNameExt, specs, grades, parms, productorManual, new Tuple<List<DpDelegateQuanUnit>>(deleQuanUnit));
     }
 }

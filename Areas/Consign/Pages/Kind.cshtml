@@ -9,7 +9,7 @@
 
 @section Breadcrumb{
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb lar-breadcrumb">
             <li class="breadcrumb-item"><a asp-page="/Index" asp-area="">首页</a></li>
             <li class="breadcrumb-item active" aria-current="page">大类</li>
         </ol>
@@ -20,7 +20,7 @@
 {
     var commonly = (new int[] { 11, 13 }).Any(x => x == kind.KindId);
     <div class="card border-secondary text-center">
-        <a asp-page="/Item" asp-page-handler="@kind.KindId" asp-area="Consign">
+        <a class="lar-a" asp-page="/Item" asp-page-handler="@kind.KindId" asp-area="Consign">
         <div class="card-body @if(commonly){@("bg-secondary text-white")}">
             <h5 class="card-title">@kind.KindName</h5>
             <p class="card-text">@kind.KindDescription</p>

@@ -14,7 +14,15 @@ body{
     font-size:13px;
 }
 
-.lar a{
+.lar .show {
+    display:inline;
+}
+
+.lar .hide {
+    display:none;
+}
+
+.lar .lar-a{
     text-decoration:none;
     color:Inherit
 }
@@ -22,6 +30,10 @@ body{
 .lar .card-body:hover{
     background-color:#ccc !important;
     color:#fff !important;
+}
+
+.lar .lar-breadcrumb {
+    background-color: #fff !important;
 }
 
 .lar .scroll-checkbox-list-h100 {
