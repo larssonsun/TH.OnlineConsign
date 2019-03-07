@@ -27,8 +27,12 @@ public class BasePageModelForConsign : PageModel
             sampleUcName == "d_sampleuc_gangbang" ? SampleUcViewComponentType.GANGBANG.ToString() :
             sampleUcName == "d_sampleuc_gangjin_zl_xkz" ? SampleUcViewComponentType.GangJinZlXkz.ToString() :
             // Default
-            sampleUcName == "d_sampleuc_default" ? SampleUcViewComponentType.Default.ToString() :
-
             SampleUcViewComponentType.Default.ToString();
+    }
+
+    public bool GetIfShouldAddScript(string sampleUcName)
+    {
+        //  TODO: c# / 2019-03-07 16_37 / here depends on the different sampleuc to decide whether to load the corresponding js file
+        return false;
     }
 }

@@ -26,6 +26,8 @@ public class SampleDetailsPageModel : BasePageModelForConsign
 
     public string SampleUcViewComponentName { get; set; }
 
+    public bool IfShouldAddScript { get; set; }
+
     public string SampleId { get; set; }
 
     public SelectList Specs { get; set; }
@@ -65,6 +67,7 @@ public class SampleDetailsPageModel : BasePageModelForConsign
         DelegateQuanUnit = new SelectList(tuple.Rest.Item1, nameof(DpDelegateQuanUnit.Nam), nameof(DpDelegateQuanUnit.Nam), null, null);
         SampleUcName = tuple.Rest.Item2;
         SampleUcViewComponentName = base.GetSampleUcViewComponentName(SampleUcName);
+        IfShouldAddScript = base.GetIfShouldAddScript(SampleUcName);
 
         ShowSpecManual = Specs.Count() <= 0 ? ShowHideCssClass.show : ShowHideCssClass.hide;
         ShowSpecSelect = Specs.Count() <= 0 ? ShowHideCssClass.hide : ShowHideCssClass.show;

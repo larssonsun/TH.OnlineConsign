@@ -9,6 +9,12 @@
 @section Scripts{
     <script src="~/js/sampledetails.cshtml.js" asp-append-version="true"></script>
 }
+@section Scripts_SampleUc{
+    @if(Model.IfShouldAddScript)
+    {
+        <script src="~/js/vc-@(Model.SampleUcViewComponentName.ToLower()).cshtml.js" asp-append-version="true"></script>
+    }
+}
 @section Breadcrumb{
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb lar-breadcrumb">
@@ -20,7 +26,6 @@
         </ol>
     </nav>
 }
-
 <input id="hiddenSampleId" type="hidden" value="@Model.SampleId">
 <div>
     <div class="form-row">
@@ -103,5 +108,5 @@
             </div>
         </div>
     </div>
-    @await  Component.InvokeAsync(Model.SampleUcViewComponentName, Model.SampleUcName)
+    @await Component.InvokeAsync(Model.SampleUcViewComponentName, Model.SampleUcName)
 </div>
