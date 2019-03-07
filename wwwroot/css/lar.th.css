@@ -22,6 +22,10 @@ body{
     display:none;
 }
 
+.lar .fs0875 {
+    font-size: 0.875rem;
+}
+
 .lar .lar-a{
     text-decoration:none;
     color:Inherit

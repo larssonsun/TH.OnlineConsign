@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using th.onlineconsign.Model;
 
-public class SampleDetailsPageModel : BasePageModel
+public class SampleDetailsPageModel : BasePageModelForConsign
 {
     ItemDbContext db;
     public SampleDetailsPageModel(ItemDbContext db)
@@ -21,6 +21,10 @@ public class SampleDetailsPageModel : BasePageModel
     public string ItemName { get; set; }
 
     public string SampleNameExt { get; set; }
+
+    public string SampleUcName { get; set; }
+
+    public string SampleUcViewComponentName { get; set; }
 
     public string SampleId { get; set; }
 
@@ -59,6 +63,8 @@ public class SampleDetailsPageModel : BasePageModel
         Specs = new SelectList(tuple.Item4, nameof(ItemSpec.SpecId), nameof(ItemSpec.SpecName), null, null);
         Grades = new SelectList(tuple.Item5, nameof(ItemGrade.GradeId), nameof(ItemGrade.GradeName), null, null);
         DelegateQuanUnit = new SelectList(tuple.Rest.Item1, nameof(DpDelegateQuanUnit.Nam), nameof(DpDelegateQuanUnit.Nam), null, null);
+        SampleUcName = tuple.Rest.Item2;
+        SampleUcViewComponentName = base.GetSampleUcViewComponentName(SampleUcName);
 
         ShowSpecManual = Specs.Count() <= 0 ? ShowHideCssClass.show : ShowHideCssClass.hide;
         ShowSpecSelect = Specs.Count() <= 0 ? ShowHideCssClass.hide : ShowHideCssClass.show;
@@ -88,8 +94,8 @@ public class SampleDetailsPageModel : BasePageModel
         return new JsonResult(productors);
     }
 
-    private async Task<Tuple<string, string, string, List<ItemSpec>, List<ItemGrade>, List<ItemParameter>, bool, Tuple<List<DpDelegateQuanUnit>>>> InitPage
-        (string sampleId, string searchkey)
+    private async Task<Tuple<string, string, string, List<ItemSpec>, List<ItemGrade>, List<ItemParameter>, bool,
+        Tuple<List<DpDelegateQuanUnit>, string>>> InitPage(string sampleId, string searchkey)
     {
         // get kindname for breadcrumb
         var kindName = await db.ItemKind
@@ -102,10 +108,12 @@ public class SampleDetailsPageModel : BasePageModel
             .Select(x => x.ItemName).FirstAsync();
 
         // get samplename for breadcrumb
-        var sampleNameExt = await db.ItemSample
+        var sampleSource = await db.ItemSample
             .Where(x => x.SampleId.ToString() == sampleId)
-            .Select(x => x.SampleJudge.Length > 0 ? $"{x.SampleName}({x.SampleJudge})" : x.SampleName)
+            .Select(x => new { ExtName = x.SampleJudge.Length > 0 ? $"{x.SampleName}({x.SampleJudge})" : x.SampleName, Sun = x.SampleUc })
             .FirstAsync();
+        var sampleNameExt = sampleSource.ExtName;
+        var sampleUcName = sampleSource.Sun;
 
         // get spec for sample details
         var specs = await db.ItemSpec
@@ -152,7 +160,7 @@ public class SampleDetailsPageModel : BasePageModel
             .ToListAsync();
 
 
-        return new Tuple<string, string, string, List<ItemSpec>, List<ItemGrade>, List<ItemParameter>, bool, Tuple<List<DpDelegateQuanUnit>>>
-            (kindName, itemName, sampleNameExt, specs, grades, parms, productorManual, new Tuple<List<DpDelegateQuanUnit>>(deleQuanUnit));
+        return new Tuple<string, string, string, List<ItemSpec>, List<ItemGrade>, List<ItemParameter>, bool, Tuple<List<DpDelegateQuanUnit>, string>>
+            (kindName, itemName, sampleNameExt, specs, grades, parms, productorManual, new Tuple<List<DpDelegateQuanUnit>, string>(deleQuanUnit, sampleUcName));
     }
 }
