@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using th.onlineconsign.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using th.onlineconsign.Services;
 
 namespace th.onlineconsign
 {
@@ -38,7 +39,7 @@ namespace th.onlineconsign
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("LMISOnlineConsign")));
-             
+
             // services.AddDbContext<Model.ItemSoureDbContext>(options =>
             //     options.UseSqlServer(
             //         Configuration.GetConnectionString("DefaultConnection")));
@@ -50,6 +51,8 @@ namespace th.onlineconsign
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddTransient<ISampleUcControler, DefaultSampleUcController>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

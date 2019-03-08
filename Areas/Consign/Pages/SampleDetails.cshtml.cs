@@ -7,13 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using th.onlineconsign.Model;
+using th.onlineconsign.Services;
 
 public class SampleDetailsPageModel : BasePageModelForConsign
 {
     ItemDbContext db;
-    public SampleDetailsPageModel(ItemDbContext db)
+    ISampleUcControler sampleUcControler;
+
+    public SampleDetailsPageModel(ItemDbContext db, ISampleUcControler service1)
     {
         this.db = db;
+        sampleUcControler = service1;
     }
 
     public string KindName { get; set; }
@@ -25,6 +29,8 @@ public class SampleDetailsPageModel : BasePageModelForConsign
     public string SampleUcName { get; set; }
 
     public string SampleUcViewComponentName { get; set; }
+
+    public string SampleUcViewComponentViewName { get; set; }
 
     public bool IfShouldAddScript { get; set; }
 
@@ -66,8 +72,10 @@ public class SampleDetailsPageModel : BasePageModelForConsign
         Grades = new SelectList(tuple.Item5, nameof(ItemGrade.GradeId), nameof(ItemGrade.GradeName), null, null);
         DelegateQuanUnit = new SelectList(tuple.Rest.Item1, nameof(DpDelegateQuanUnit.Nam), nameof(DpDelegateQuanUnit.Nam), null, null);
         SampleUcName = tuple.Rest.Item2;
-        SampleUcViewComponentName = base.GetSampleUcViewComponentName(SampleUcName);
-        IfShouldAddScript = base.GetIfShouldAddScript(SampleUcName);
+        var sampleucinfo = sampleUcControler.GetSampleUcViewComponentInfo(SampleUcName, SampleId);
+        SampleUcViewComponentName = sampleucinfo.Item1;
+        SampleUcViewComponentViewName = sampleucinfo.Item2;
+        IfShouldAddScript = sampleUcControler.GetIfShouldAddScript(SampleUcName);
 
         ShowSpecManual = Specs.Count() <= 0 ? ShowHideCssClass.show : ShowHideCssClass.hide;
         ShowSpecSelect = Specs.Count() <= 0 ? ShowHideCssClass.hide : ShowHideCssClass.show;
