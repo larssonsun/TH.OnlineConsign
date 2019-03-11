@@ -4,7 +4,7 @@ namespace th.onlineconsign.Services
 {
     public class DefaultSampleUcController : ISampleUcControler
     {
-        public string UseXKZsampleIdStr = "|112201|112202|122701|122702|112225|112226|122725|122726|";//使用许可证的sample字符串
+        private string UseXKZsampleIdStr = "|112201|112202|122701|122702|112225|112226|122725|122726|";//使用许可证的sample字符串
 
         private string XhzOperator(string sampleId, string orgSampleucName)
         {
@@ -20,27 +20,30 @@ namespace th.onlineconsign.Services
         private bool GetIfSampleUseXKZ(string sampleId)
         {
             if (sampleId == null)
-                return false;
+                UseXkzForGangJin = false;
             else
-                return UseXKZsampleIdStr.IndexOf("|" + sampleId + "|") >= 0;
+                UseXkzForGangJin = UseXKZsampleIdStr.IndexOf("|" + sampleId + "|") >= 0;
+            return UseXkzForGangJin;
         }
 
-        public enum SampleUcViewComponentViewType
+        private enum SampleUcViewComponentViewType
         {
             None, Default, GangJin, GangJinZl, GJGYCL, GJGYCL2, HanJie, HNT, HNTKS, HNTKZ, JNPHBDefault, JXLianJie, QLMJJ, ShuiNi, SJJC,
             SZDL, MC, Zhuan, JiShi, TuGong, GuanSha, JNTongTiaoJian, GuanSha3, JNQK, GJL, GANGBANG, YHWZ, FMH, HNTQJL, WCXKY, JNJNWQNBWB,
             JNZhiZuoRiQi, ShenShui, JxljTt, GangJinZlXkz, GGKJ, GJL355, GJL355_Ttj
         };
 
-        public Tuple<string, string> GetSampleUcViewComponentInfo(string sampleUcName, string sampleId)
+        private bool UseXkzForGangJin { get; set; }
+
+        public Tuple<string, string, bool> GetSampleUcViewComponentInfo(string sampleUcName, string sampleId)
         {
             sampleUcName = XhzOperator(sampleId, sampleUcName);
 
             SampleUcViewComponentViewType viewName;
             SampleUcViewComponentViewType componentName;
-            
+
             // ShuiNi
-            switch(sampleUcName)
+            switch (sampleUcName)
             {
                 case "d_sampleuc_shuini":
                     viewName = SampleUcViewComponentViewType.ShuiNi;
@@ -61,7 +64,7 @@ namespace th.onlineconsign.Services
                     break;
             }
 
-            return new Tuple<string, string>(componentName.ToString(), viewName.ToString());
+            return new Tuple<string, string, bool>(componentName.ToString(), viewName.ToString(), UseXkzForGangJin);
 
 
 

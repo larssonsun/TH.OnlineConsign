@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using th.onlineconsign.Model;
 using th.onlineconsign.Services;
 
-public class SampleDetailsPageModel : BasePageModelForConsign
+public partial class SampleDetailsPageModel : BasePageModelForConsign
 {
     ItemDbContext db;
     ISampleUcControler sampleUcControler;
@@ -58,7 +58,6 @@ public class SampleDetailsPageModel : BasePageModelForConsign
 
     public ReadonlyCssClass ReadonlyProductorManual { get; set; }
 
-
     public async Task OnGetAsync()
     {
         // TODO: c# / 2019-03-06 10_52 / part of the steel bar sample here shows the record certificate and does not include the license
@@ -75,13 +74,15 @@ public class SampleDetailsPageModel : BasePageModelForConsign
         var sampleucinfo = sampleUcControler.GetSampleUcViewComponentInfo(SampleUcName, SampleId);
         SampleUcViewComponentName = sampleucinfo.Item1;
         SampleUcViewComponentViewName = sampleucinfo.Item2;
+        UseXkzForGangJin  = sampleucinfo.Item3;
         IfShouldAddScript = sampleUcControler.GetIfShouldAddScript(SampleUcName);
-
+        
         ShowSpecManual = Specs.Count() <= 0 ? ShowHideCssClass.show : ShowHideCssClass.hide;
         ShowSpecSelect = Specs.Count() <= 0 ? ShowHideCssClass.hide : ShowHideCssClass.show;
         ShowGradeManual = Grades.Count() <= 0 ? ShowHideCssClass.show : ShowHideCssClass.hide;
         ShowGradeSelect = Grades.Count() <= 0 ? ShowHideCssClass.hide : ShowHideCssClass.show;
         ShowProductorManual = tuple.Item7 ? ShowHideCssClass.show : ShowHideCssClass.hide;
+
         ShowProductorSelect = tuple.Item7 ? ShowHideCssClass.hide : ShowHideCssClass.show;
         ReadonlyProductorManual = tuple.Item7 ? ReadonlyCssClass.na : ReadonlyCssClass.ReadOnly;
     }

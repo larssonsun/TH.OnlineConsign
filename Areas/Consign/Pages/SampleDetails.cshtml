@@ -27,6 +27,7 @@
     </nav>
 }
 <input id="hiddenSampleId" type="hidden" value="@Model.SampleId">
+<input id="hiddenUseXkzForGangJin" type="hidden" value="@(Model.UseXkzForGangJin ? 1 : 0)">
 <div>
     <div class="form-row">
         <div class="col-6">
@@ -108,5 +109,6 @@
             </div>
         </div>
     </div>
-    @await Component.InvokeAsync(Model.SampleUcViewComponentName, Model.SampleUcViewComponentViewName)
+    @await Component.InvokeAsync(Model.SampleUcViewComponentName, 
+        new {ViewName=Model.SampleUcViewComponentViewName, SampleId=Model.SampleId})
 </div>

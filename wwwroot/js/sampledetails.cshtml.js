@@ -36,5 +36,21 @@ $(document).ready(function () {
     // when productor passport sel changed
     productorSel.change(function () {
         productorNameTxt.val($(this).val());
+        var xkzAddon = $("#hiddenUseXkzForGangJin").val();
+        if (xkzAddon=="1") {
+            $.getJSON("/Consign/SampleDetails/SearchXkz?putOnRecordsPassport=" + $(this).find("option:selected").text(), function (data) {
+                $("#Gj_Xk_No").children("option:gt(0)").remove();
+                $("#xlzProductorName").val("");
+                if (data) {
+                    $.each(data, function (i, elm) {
+                        $("#Gj_Xk_No").append("<option value=" + elm.name + (i == 0 ? " selected>" : ">") + elm.putOnRecordsPassport + "</option > ");
+                        if (i == 0)
+                            $("#xlzProductorName").val(elm.name);
+                    });
+                }
+            }, function (XMLHttpRequest, textStatus) {
+                alert(textStatus);
+            });
+        }
     });
 });

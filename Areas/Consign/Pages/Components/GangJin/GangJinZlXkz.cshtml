@@ -1,3 +1,5 @@
+@model GangJinViewModel
+@using th.onlineconsign.Components
 <div class="form-row">
     <div class="col-12">
         <div class="input-group input-group-sm mb-3">
@@ -30,7 +32,7 @@
             <div class="input-group-prepend">
                 <label class="input-group-text" for="GJ_BianMiaoBiaoShi">表面标识</label>
             </div>
-            <img src="..." alt="..." id="Gj_BianMiaoBiaoShi_Image" class="img-thumbnail">
+            <img src="" alt="" id="Gj_BianMiaoBiaoShi_Image" class="img-thumbnail">
             <input type="text" for="GJ_BianMiaoBiaoShi" class="form-control" id="product_Symbol" placeholder="" aria-label="表面标识" readonly>
         </div>
     </div>
@@ -41,10 +43,10 @@
             <div class="input-group-prepend">
                 <label class="input-group-text" for="productorName">许可证及生产厂家</label>
             </div>
-            <select class="custom-select custom-select-sm" id="Gj_Xk_No">
+            <select class="custom-select custom-select-sm" id="Gj_Xk_No" asp-items="@Model.Productors">
                 <option selected>请选择...</option>
             </select>
-            <input type="text" class="form-control w-30" id="productorName" 
+            <input type="text" class="form-control w-30" id="xlzProductorName" 
                 placeholder="生产厂家名称" aria-label="生产厂家" readonly>
         </div>
     </div>
