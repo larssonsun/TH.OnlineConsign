@@ -7,8 +7,6 @@ using th.onlineconsign.Model;
 
 public partial class SampleDetailsPageModel : BasePageModelForConsign
 {
-    public bool UseXkzForGangJin { get; set; }
-
     public async Task<JsonResult> OnGetSearchXkz(string putOnRecordsPassport)
     {
         // TODO: c# / 2019-03-05 14:51 / should use cache

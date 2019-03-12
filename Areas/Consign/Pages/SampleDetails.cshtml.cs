@@ -74,8 +74,7 @@ public partial class SampleDetailsPageModel : BasePageModelForConsign
         var sampleucinfo = sampleUcControler.GetSampleUcViewComponentInfo(SampleUcName, SampleId);
         SampleUcViewComponentName = sampleucinfo.Item1;
         SampleUcViewComponentViewName = sampleucinfo.Item2;
-        UseXkzForGangJin  = sampleucinfo.Item3;
-        IfShouldAddScript = sampleUcControler.GetIfShouldAddScript(SampleUcName);
+        IfShouldAddScript = sampleUcControler.GetIfShouldAddScript(SampleUcName, SampleId);
         
         ShowSpecManual = Specs.Count() <= 0 ? ShowHideCssClass.show : ShowHideCssClass.hide;
         ShowSpecSelect = Specs.Count() <= 0 ? ShowHideCssClass.hide : ShowHideCssClass.show;

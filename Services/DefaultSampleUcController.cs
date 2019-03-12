@@ -35,7 +35,7 @@ namespace th.onlineconsign.Services
 
         private bool UseXkzForGangJin { get; set; }
 
-        public Tuple<string, string, bool> GetSampleUcViewComponentInfo(string sampleUcName, string sampleId)
+        public Tuple<string, string> GetSampleUcViewComponentInfo(string sampleUcName, string sampleId)
         {
             sampleUcName = XhzOperator(sampleId, sampleUcName);
 
@@ -64,7 +64,7 @@ namespace th.onlineconsign.Services
                     break;
             }
 
-            return new Tuple<string, string, bool>(componentName.ToString(), viewName.ToString(), UseXkzForGangJin);
+            return new Tuple<string, string>(componentName.ToString(), viewName.ToString());
 
 
 
@@ -74,10 +74,11 @@ namespace th.onlineconsign.Services
             // viewName == "d_sampleuc_gangbang" ? SampleUcViewComponentType.GANGBANG.ToString() :
         }
 
-        public bool GetIfShouldAddScript(string sampleUcName)
+        public bool GetIfShouldAddScript(string sampleUcName, string sampleId)
         {
-            //  TODO: c# / 2019-03-07 16_37 / here depends on the different sampleuc to decide whether to load the corresponding js file
-            return false;
+            sampleUcName = XhzOperator(sampleId, sampleUcName);
+            return "d_sampleuc_gangjin_zl_xkz" == sampleUcName ? true :
+            false;
         }
     }
 }
