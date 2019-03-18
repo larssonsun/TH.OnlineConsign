@@ -23,8 +23,6 @@ namespace th.onlineconsign.Components
 
         public async Task<IViewComponentResult> InvokeAsync(string viewName, string sampleId)
         {
-            // TODO: c# / 2019-03-06 10_52 / A view with a surface identifier needs to control the display switching of text or image
-
             return await Task<IViewComponentResult>.Run(() =>
             {
                 return View(viewName, new GangJinViewModel {  });

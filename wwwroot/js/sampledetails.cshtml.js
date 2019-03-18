@@ -18,7 +18,7 @@ $(document).ready(function () {
             return;
         var sampleId = $("#hiddenSampleId").val();
         var searchProductorSearchKey = $.trim($("#searchProductorSearchKey").val());
-        $.getJSON("/Consign/SampleDetails/SearchProductor?sampleid=" + sampleId + "&searchkey=" + searchProductorSearchKey, function (data) {
+        $.getJSON("/Consign/SampleDetails/SearchProductor?sampleid=" + sampleId + "&searchkey=" + encodeURI(searchProductorSearchKey), function (data) {
             productorSel.children("option:gt(0)").remove();
             productorNameTxt.val("");
             if (data) {
