@@ -5,16 +5,16 @@
 $(document).ready(function () {
     var productorSel = $("#productorSource");
     var xkzSel = $("#Gj_Xk_No");
+    var xkzProducerName = $("#xlzProductorName");
     var getXkz = function () {
         var porp = productorSel.find("option:selected");
-        if (porp.index() <= 0)
-        {
+        if (porp.index() <= 0) {
             xkzSel.children("option:gt(0)").remove();
             return;
         }
         $.getJSON("/Consign/SampleDetails/SearchXkz?putOnRecordsPassport=" + porp.text(), function (data) {
             xkzSel.children("option:gt(0)").remove();
-            $("#xlzProductorName").val("");
+            xkzProducerName.val("");
             if (data) {
                 if (data.length <= 1)
                     xkzSel.attr("disabled", true);
@@ -23,14 +23,18 @@ $(document).ready(function () {
                 $.each(data, function (i, elm) {
                     xkzSel.append("<option value=" + elm.name + (i == 0 ? " selected>" : ">") + elm.putOnRecordsPassport + "</option>");
                     if (i == 0)
-                        $("#xlzProductorName").val(elm.name);
+                        xkzProducerName.val(elm.name);
                 });
             }
         }, function (XMLHttpRequest, textStatus) {
             alert(textStatus);
         });
     }
-    productorSel.change(getXkz);
+    var setKxzProducerName = function () {
+        xkzProducerName.val($(this).val());
+    };
 
-    //TODO: 加许可证变化与许可证单位名称inputtext文字同步
+    productorSel.change(getXkz);
+    xkzSel.change(setKxzProducerName);
+
 });
