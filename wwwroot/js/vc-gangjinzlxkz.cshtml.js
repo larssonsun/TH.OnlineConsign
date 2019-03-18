@@ -1,6 +1,7 @@
 /**
  * created by larsson on 3.12 2019
  * js for component view "d_sampleuc_gangjin_zl_xkz"
+ * last edited by larsson on 3.18 2019
  */
 $(document).ready(function () {
     var productorSel = $("#productorSource");
