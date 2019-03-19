@@ -58,6 +58,10 @@ namespace th.onlineconsign.Services
                     viewName = SampleUcViewComponentViewType.GangJinZlXkz;
                     componentName = SampleUcViewComponentViewType.GangJin;
                     break;
+                case "d_sampleuc_gjgycl2":
+                    viewName = SampleUcViewComponentViewType.GJGYCL2;
+                    componentName = SampleUcViewComponentViewType.GangJin;
+                    break;
                 default:
                     viewName = SampleUcViewComponentViewType.Default;
                     componentName = SampleUcViewComponentViewType.Default;

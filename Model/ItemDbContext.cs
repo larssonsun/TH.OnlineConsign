@@ -86,7 +86,6 @@ namespace th.onlineconsign.Model
                 entity.Property(e => e.SpecSn).HasColumnName("SpecSN");
             });
 
-
             modelBuilder.Entity<ItemItem>(entity =>
             {
                 entity.ToTable("Item_Item");

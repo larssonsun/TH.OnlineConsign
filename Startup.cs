@@ -48,6 +48,10 @@ namespace th.onlineconsign
                 options.UseSqlServer(
                     Configuration.GetConnectionString("ItemSourceConnection")));
 
+            services.AddDbContext<Model.SampleStorageDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("LMISOnlineConsign")));
+
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

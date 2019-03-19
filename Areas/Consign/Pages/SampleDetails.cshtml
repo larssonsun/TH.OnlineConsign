@@ -26,7 +26,8 @@
         </ol>
     </nav>
 }
-<input id="hiddenSampleId" type="hidden" value="@Model.SampleId">
+
+<form method="post">
 <div>
     <div class="form-row">
         <div class="col-6">
@@ -34,10 +35,10 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="samplespec">规格</label>
                 </div>
-                <select class="custom-select custom-select-sm @Model.ShowSpecSelect" id="samplespec" asp-items="Model.Specs">
+                <select class="custom-select custom-select-sm @Model.ShowSpecSelect" name="SampleStorageExt.SpecID" asp-items="Model.Specs">
                     <option selected>请选择...</option>
                 </select>
-                <input type="text" class="form-control @Model.ShowSpecManual" id="samplespecManual" placeholder="请输入" aria-label="规格">
+                <input type="text" class="form-control @Model.ShowSpecManual" name="SampleStorageExt.SpecName" placeholder="请输入" aria-label="规格">
             </div>
         </div>
         <div class="col-6">
@@ -110,4 +111,9 @@
     </div>
     @await Component.InvokeAsync(Model.SampleUcViewComponentName, 
         new {ViewName=Model.SampleUcViewComponentViewName, SampleId=Model.SampleId})
+    <div>
+        <button class="btn btn-primary" asp-route-handler="save">保存</button>
+    </div>
 </div>
+<input id="hiddenSampleId" name="SampleId" type="hidden" value="@Model.SampleId">
+</form>

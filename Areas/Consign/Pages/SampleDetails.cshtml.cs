@@ -12,11 +12,13 @@ using th.onlineconsign.Services;
 public partial class SampleDetailsPageModel : BasePageModelForConsign
 {
     ItemDbContext db;
+    SampleStorageDbContext dbSampleStorage;
     ISampleUcControler sampleUcControler;
 
-    public SampleDetailsPageModel(ItemDbContext db, ISampleUcControler service1)
+    public SampleDetailsPageModel(ItemDbContext db, SampleStorageDbContext db2, ISampleUcControler service1)
     {
         this.db = db;
+        dbSampleStorage = db2;
         sampleUcControler = service1;
     }
 
@@ -34,6 +36,7 @@ public partial class SampleDetailsPageModel : BasePageModelForConsign
 
     public bool IfShouldAddScript { get; set; }
 
+    [BindProperty]
     public string SampleId { get; set; }
 
     public SelectList Specs { get; set; }
@@ -41,6 +44,9 @@ public partial class SampleDetailsPageModel : BasePageModelForConsign
     public SelectList Grades { get; set; }
 
     public List<ItemParameter> Parameters { get; set; }
+
+    [BindProperty]
+    public SampleStorageExt SampleStorageExt { get; set; }
 
     public SelectList DelegateQuanUnit { get; set; }
 
@@ -75,7 +81,7 @@ public partial class SampleDetailsPageModel : BasePageModelForConsign
         SampleUcViewComponentName = sampleucinfo.Item1;
         SampleUcViewComponentViewName = sampleucinfo.Item2;
         IfShouldAddScript = sampleUcControler.GetIfShouldAddScript(SampleUcName, SampleId);
-        
+
         ShowSpecManual = Specs.Count() <= 0 ? ShowHideCssClass.show : ShowHideCssClass.hide;
         ShowSpecSelect = Specs.Count() <= 0 ? ShowHideCssClass.hide : ShowHideCssClass.show;
         ShowGradeManual = Grades.Count() <= 0 ? ShowHideCssClass.show : ShowHideCssClass.hide;
@@ -103,6 +109,18 @@ public partial class SampleDetailsPageModel : BasePageModelForConsign
             .ToListAsync();
 
         return new JsonResult(productors);
+    }
+
+
+    public async Task<RedirectToPageResult> OnPostSave()
+    {
+        await Task.Run(() =>
+        {
+            Console.WriteLine($"-------------------{SampleStorageExt.SpecId}");
+            Console.WriteLine($"-------------------{SampleStorageExt.SpecName}");
+        });
+
+        return RedirectToPage(pageName: "SampleDetails", routeValues: new { handler = SampleId, area = "Consign" });
     }
 
     private async Task<Tuple<string, string, string, List<ItemSpec>, List<ItemGrade>, List<ItemParameter>, bool,
@@ -174,4 +192,9 @@ public partial class SampleDetailsPageModel : BasePageModelForConsign
         return new Tuple<string, string, string, List<ItemSpec>, List<ItemGrade>, List<ItemParameter>, bool, Tuple<List<DpDelegateQuanUnit>, string>>
             (kindName, itemName, sampleNameExt, specs, grades, parms, productorManual, new Tuple<List<DpDelegateQuanUnit>, string>(deleQuanUnit, sampleUcName));
     }
+}
+
+public class SampleStorageExt : SampleStorageMain
+{
+
 }

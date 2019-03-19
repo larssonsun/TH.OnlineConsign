@@ -12,6 +12,7 @@ $(document).ready(function () {
         var porp = productorSel.find("option:selected");
         if (porp.index() <= 0) {
             xkzSel.children("option:gt(0)").remove();
+            xkzSel.change();
             return;
         }
 
@@ -30,6 +31,7 @@ $(document).ready(function () {
                 });
                 xkzSel.change();
             }
+            
         }, function (XMLHttpRequest, textStatus) {
             alert(textStatus);
         });
