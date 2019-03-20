@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/css/lar.th.css" />
 }
 @section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
     <script src="~/js/sampledetails.cshtml.js" asp-append-version="true"></script>
 }
 @section Scripts_SampleUc{
@@ -33,9 +34,9 @@
         <div class="col-6">
             <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="samplespec">规格</label>
+                    <label class="input-group-text" asp-for="SampleStorageExt.SpecId">规格</label>
                 </div>
-                <select class="custom-select custom-select-sm @Model.ShowSpecSelect" name="SampleStorageExt.SpecID" asp-items="Model.Specs">
+                <select class="custom-select custom-select-sm @Model.ShowSpecSelect" id="SampleStorageExt_SpecId" name="SampleStorageExt.SpecId" asp-items="Model.Specs">
                     <option selected>请选择...</option>
                 </select>
                 <input type="text" class="form-control @Model.ShowSpecManual" name="SampleStorageExt.SpecName" placeholder="请输入" aria-label="规格">
@@ -44,12 +45,12 @@
         <div class="col-6">
             <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="samplegrade">强度/等级</label>
+                    <label class="input-group-text" for="SampleStorageExt_GradeID">强度/等级</label>
                 </div>
-                <select class="custom-select custom-select-sm @Model.ShowGradeSelect" id="samplegrade" asp-items="Model.Grades">
+                <select class="custom-select custom-select-sm @Model.ShowGradeSelect" id="SampleStorageExt_GradeID" name="SampleStorageExt.GradeID" asp-items="Model.Grades">
                     <option selected>请选择...</option>
                 </select>
-                <input type="text" class="form-control @Model.ShowGradeManual" id="samplegradeManual" placeholder="请输入" aria-label="强度/等级">
+                <input type="text" class="form-control @Model.ShowGradeManual" name="SampleStorageExt.GradeName" placeholder="请输入" aria-label="强度/等级">
             </div>
         </div>
     </div>
@@ -60,8 +61,11 @@
                 @foreach (var parm in Model.Parameters)
                 {
                 <div class="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" class="custom-control-input" id="chkparm_@parm.ParameterId" @if(parm.IsDefault.Value){@("Checked")}>
+                    <input type="checkbox" class="custom-control-input" id="chkparm_@parm.ParameterId" name="Parameters[@parm.ParameterId].Checked" 
+                        value="true" @if(parm.IsDefault.Value){@("Checked")}>
                     <label class="custom-control-label" for="chkparm_@parm.ParameterId">@parm.ParameterName</label>
+                    <input type="hidden" name="Parameters[@parm.ParameterId].ParameterId" value="@parm.ParameterId" />
+                    <input type="hidden" name="Parameters.Index" value="@parm.ParameterId" />
                 </div>
                 }
             </div>

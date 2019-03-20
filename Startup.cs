@@ -57,6 +57,7 @@ namespace th.onlineconsign
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddTransient<ISampleUcControler, DefaultSampleUcController>();
+            services.AddTransient<ITools, DefaultTools>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +15,14 @@ public partial class SampleDetailsPageModel : BasePageModelForConsign
     ItemDbContext db;
     SampleStorageDbContext dbSampleStorage;
     ISampleUcControler sampleUcControler;
+    ITools tools;
 
-    public SampleDetailsPageModel(ItemDbContext db, SampleStorageDbContext db2, ISampleUcControler service1)
+    public SampleDetailsPageModel(ItemDbContext db, SampleStorageDbContext db2, ISampleUcControler service1, ITools service2)
     {
         this.db = db;
         dbSampleStorage = db2;
         sampleUcControler = service1;
+        tools = service2;
     }
 
     public string KindName { get; set; }
@@ -43,7 +46,8 @@ public partial class SampleDetailsPageModel : BasePageModelForConsign
 
     public SelectList Grades { get; set; }
 
-    public List<ItemParameter> Parameters { get; set; }
+    [BindProperty]
+    public List<ItemParameterExt> Parameters { get; set; }
 
     [BindProperty]
     public SampleStorageExt SampleStorageExt { get; set; }
@@ -72,7 +76,7 @@ public partial class SampleDetailsPageModel : BasePageModelForConsign
         KindName = tuple.Item1;
         ItemName = tuple.Item2;
         SampleNameExt = tuple.Item3;
-        Parameters = tuple.Item6;
+        Parameters = tuple.Item6.Select(x => tools.EntityCopy<ItemParameter, ItemParameterExt>(x)).ToList();
         Specs = new SelectList(tuple.Item4, nameof(ItemSpec.SpecId), nameof(ItemSpec.SpecName), null, null);
         Grades = new SelectList(tuple.Item5, nameof(ItemGrade.GradeId), nameof(ItemGrade.GradeName), null, null);
         DelegateQuanUnit = new SelectList(tuple.Rest.Item1, nameof(DpDelegateQuanUnit.Nam), nameof(DpDelegateQuanUnit.Nam), null, null);
@@ -118,6 +122,8 @@ public partial class SampleDetailsPageModel : BasePageModelForConsign
         {
             Console.WriteLine($"-------------------{SampleStorageExt.SpecId}");
             Console.WriteLine($"-------------------{SampleStorageExt.SpecName}");
+            Console.WriteLine($"-------------------{SampleStorageExt.GradeId}");
+            Console.WriteLine($"-------------------{SampleStorageExt.GradeName}");
         });
 
         return RedirectToPage(pageName: "SampleDetails", routeValues: new { handler = SampleId, area = "Consign" });
@@ -196,5 +202,9 @@ public partial class SampleDetailsPageModel : BasePageModelForConsign
 
 public class SampleStorageExt : SampleStorageMain
 {
+}
 
+public class ItemParameterExt : ItemParameter
+{
+    public bool Checked { get; set; }
 }
