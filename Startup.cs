@@ -59,9 +59,11 @@ namespace th.onlineconsign
             services.AddTransient<ISampleConsignService, DefaultSampleConsignService>();
             services.AddTransient<ISampleUcControler, DefaultSampleUcController>();
             services.AddTransient<ITools, DefaultTools>();
+            
 
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddMvcOptions(o => o.ModelMetadataDetailsProviders.Add(new DataAnnotationsMetadataProviderFix()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,7 +86,6 @@ namespace th.onlineconsign
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-
             app.UseMvc();
         }
     }
