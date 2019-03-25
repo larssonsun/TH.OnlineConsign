@@ -10,13 +10,7 @@ namespace th.onlineconsign.Model
         public string ContractSignNumber { get; set; }
         public string JzcertificateNo { get; set; }
         public string QycertificateNo { get; set; }
-        public string CoreCodeIdRange { get; set; }
-        public string BatchNumber { get; set; }
-        public string CoreCodeId { get; set; }
-        public string CoreCodeIdEnd { get; set; }
         public DateTime DetectonDate { get; set; }
-        public int SampleStatus { get; set; }
-        public bool SampleRegular { get; set; }
         public string ProJectPart { get; set; }
         public string ProduceFactory { get; set; }
         public string RecordCertificate { get; set; }
@@ -24,7 +18,6 @@ namespace th.onlineconsign.Model
         public string DelegateQuanUnit { get; set; }
         public DateTime MoldingDate { get; set; }
         public int AgeTime { get; set; }
-        public string ExamResult { get; set; }
         public int KindId { get; set; }
         public int ItemId { get; set; }
         public int SampleId { get; set; }
@@ -41,14 +34,5 @@ namespace th.onlineconsign.Model
         public string GradeName { get; set; }
         public string ExamParameterCn { get; set; }
         public string SampleUcDbTableName { get; set; }
-        public int DownStatus { get; set; }
-        public double SampleCount { get; set; }
-        public int Cancel { get; set; }
-        public string ReportNumber { get; set; }
-        public DateTime ReportDate { get; set; }
-        public double Fee { get; set; }
-        public string ReExamOldSampleId { get; set; }
-        public int ExamKind { get; set; }
-        public int ClientInfoType { get; set; }
     }
 }

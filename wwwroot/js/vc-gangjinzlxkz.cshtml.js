@@ -4,11 +4,10 @@
  * last edited by larsson on 3.18 2019
  */
 $(document).ready(function () {
-    var productorSel = $("#productorSource");
+    var productorSel = $("#SampleStorageExt_RecordCertificate");
     var xkzSel = $("#Gj_Xk_No");
     var xkzProducerName = $("#Gj_Xk_Name");
     var getXkz = function () {
-
         var porp = productorSel.find("option:selected");
         if (porp.index() <= 0) {
             xkzSel.children("option:gt(0)").remove();

@@ -39,18 +39,18 @@
                 <select class="custom-select custom-select-sm @Model.ShowSpecSelect" id="SampleStorageExt_SpecId" name="SampleStorageExt.SpecId" asp-items="Model.Specs">
                     <option selected>请选择...</option>
                 </select>
-                <input type="text" class="form-control @Model.ShowSpecManual" name="SampleStorageExt.SpecName" placeholder="请输入" aria-label="规格">
+                <input type="text" class="form-control @Model.ShowSpecManual" id="SampleStorageExt_SpecName" name="SampleStorageExt.SpecName" placeholder="请输入" aria-label="规格">
             </div>
         </div>
         <div class="col-6">
             <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="SampleStorageExt_GradeID">强度/等级</label>
+                    <label class="input-group-text" asp-for="SampleStorageExt.GradeId">强度/等级</label>
                 </div>
-                <select class="custom-select custom-select-sm @Model.ShowGradeSelect" id="SampleStorageExt_GradeID" name="SampleStorageExt.GradeID" asp-items="Model.Grades">
+                <select class="custom-select custom-select-sm @Model.ShowGradeSelect" id="SampleStorageExt_GradeId" name="SampleStorageExt.GradeId" asp-items="Model.Grades">
                     <option selected>请选择...</option>
                 </select>
-                <input type="text" class="form-control @Model.ShowGradeManual" name="SampleStorageExt.GradeName" placeholder="请输入" aria-label="强度/等级">
+                <input type="text" class="form-control @Model.ShowGradeManual" id="SampleStorageExt_GradeName" name="SampleStorageExt.GradeName" placeholder="请输入" aria-label="强度/等级">
             </div>
         </div>
     </div>
@@ -64,6 +64,7 @@
                     <input type="checkbox" class="custom-control-input" id="chkparm_@parm.ParameterId" name="Parameters[@parm.ParameterId].Checked" 
                         value="true" @if(parm.IsDefault.Value){@("Checked")}>
                     <label class="custom-control-label" for="chkparm_@parm.ParameterId">@parm.ParameterName</label>
+                    <input type="hidden" name="Parameters[@parm.ParameterId].ParameterName" value="@parm.ParameterName" />
                     <input type="hidden" name="Parameters[@parm.ParameterId].ParameterId" value="@parm.ParameterId" />
                     <input type="hidden" name="Parameters.Index" value="@parm.ParameterId" />
                 </div>
@@ -75,7 +76,7 @@
         <div class="col-12">
             <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="productorName">备案证及生产厂家</label>
+                    <label class="input-group-text" asp-for="SampleStorageExt.RecordCertificate">备案证及生产厂家</label>
                 </div>
 
                 <input type="text" class="form-control @Model.ShowProductorSelect" id="searchProductorSearchKey" placeholder="关键字" aria-label="关键字">
@@ -84,10 +85,11 @@
                     <button class="btn btn-outline-secondary" id="searchProductor" type="button">搜索</button>
                 </div>
 
-                <select class="custom-select custom-select-sm @Model.ShowProductorSelect" id="productorSource" >
-                    <option selected>请选择...</option>
+                <select class="custom-select custom-select-sm @Model.ShowProductorSelect" id="SampleStorageExt_RecordCertificate" 
+                    name="SampleStorageExt.RecordCertificate" >
+                    <option value="" selected>请选择...</option>
                 </select>
-                <input type="text" class="form-control w-30" id="productorName" 
+                <input type="text" class="form-control w-30" id="produceFactory" name="SampleStorageExt.ProduceFactory"
                     placeholder="生产厂家名称" aria-label="生产厂家" @Model.ReadonlyProductorManual>
             </div>
         </div>
@@ -96,20 +98,20 @@
         <div class="col-6">
             <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="sampleDeleQuan">代表数量</label>
+                    <label class="input-group-text" asp-for="SampleStorageExt.DelegateQuan">代表数量</label>
                 </div>
-                <input type="number" min="0" class="form-control" id="sampleDeleQuan" placeholder="请输入" aria-label="代表数量">
-                <select class="custom-select custom-select-sm" id="sampleDeleQuanUnit" asp-items="Model.DelegateQuanUnit">
-                    <option selected>请选择...</option>
+                <input type="number" min="0" class="form-control" id="SampleStorageExt_DelegateQuan" name="SampleStorageExt.DelegateQuan" placeholder="请输入" aria-label="代表数量">
+                <select class="custom-select custom-select-sm" id="SampleStorageExt_DelegateQuanUnit" name="SampleStorageExt.DelegateQuanUnit" asp-items="Model.DelegateQuanUnit">
+                    <option value="0" selected>请选择...</option>
                 </select>
             </div>
         </div>
         <div class="col-6">
             <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="samplegrade">使用部位</label>
+                    <label class="input-group-text" asp-for="SampleStorageExt.ProJectPart">使用部位</label>
                 </div>
-                <input type="text" class="form-control" id="samplegradeManual" placeholder="请输入" aria-label="使用部位">
+                <input type="text" class="form-control" id="SampleStorageExt_ProJectPart" name="SampleStorageExt.ProJectPart" value="@Model.SampleStorageExt.ProJectPart" placeholder="请输入" aria-label="使用部位">
             </div>
         </div>
     </div>
@@ -120,4 +122,7 @@
     </div>
 </div>
 <input id="hiddenSampleId" name="SampleId" type="hidden" value="@Model.SampleId">
+<input name="KindName" type="hidden" value="@Model.KindName">
+<input name="ItemName" type="hidden" value="@Model.ItemName">
+<input name="SampleNameExt" type="hidden" value="@Model.SampleNameExt">
 </form>

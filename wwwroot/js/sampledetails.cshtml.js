@@ -5,8 +5,13 @@
 
 $(document).ready(function () {
 
-    var productorSel = $("#productorSource");
-    var productorNameTxt = $("#productorName");
+
+    // //   -----------------   // //
+    // //   productor factroy   // //
+    // //   -----------------   // //
+
+    var productorSel = $("#SampleStorageExt_RecordCertificate");
+    var productorNameTxt = $("#produceFactory");
     // TODO: js / 2019-03-05 14:51 / should addd searchkey validate
     var validateSearchProductor = function () {
         return true;
@@ -37,5 +42,30 @@ $(document).ready(function () {
     // when productor passport sel changed
     productorSel.change(function () {
         productorNameTxt.val($(this).val());
+    });
+
+
+    // //   -------------------   // //
+    // //   spec and grade name   // //
+    // //   -------------------   // //
+    
+    var specName = $("#SampleStorageExt_SpecName");
+    $("#SampleStorageExt_SpecId").change(function () {
+        if ($(this).val() == 0)
+            specName.val("");
+        else {
+            var specTxt = $(this).find("option:selected").text();
+            specName.val(specTxt);
+        }
+    });
+
+    var gradeName = $("#SampleStorageExt_GradeName");
+    $("#SampleStorageExt_GradeId").change(function () {
+        if ($(this).val() == 0)
+            gradeName.val("");
+        else {
+            var gradeTxt = $(this).find("option:selected").text();
+            gradeName.val(gradeTxt);
+        }
     });
 });

@@ -56,6 +56,7 @@ namespace th.onlineconsign
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddTransient<ISampleConsignService, DefaultSampleConsignService>();
             services.AddTransient<ISampleUcControler, DefaultSampleUcController>();
             services.AddTransient<ITools, DefaultTools>();
 
