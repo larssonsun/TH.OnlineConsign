@@ -157,16 +157,7 @@ public partial class SampleDetailsPageModel : BasePageModelForConsign
 }
 
 public class SampleStorageMainExt : SampleStorageMain
-{
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
-    public new string ProJectPart { get; set; }
-
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
-    public new string GradeName { get; set; }
-
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
-    public new string SpecName { get; set; }
-}
+{}
 
 public class ItemParameterExt : ItemParameter
 {
