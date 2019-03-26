@@ -42,7 +42,6 @@ namespace th.onlineconsign.Services
             SampleUcViewComponentViewType viewName;
             SampleUcViewComponentViewType componentName;
 
-            // ShuiNi
             switch (sampleUcName)
             {
                 case "d_sampleuc_shuini":

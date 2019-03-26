@@ -11,9 +11,9 @@
     <script src="~/js/sampledetails.cshtml.js" asp-append-version="true"></script>
 }
 @section Scripts_SampleUc{
-    @if(Model.IfShouldAddScript)
+    @if(Model.SampleDetailsPageCtl.IfShouldAddScript)
     {
-        <script src="~/js/vc-@(Model.SampleUcViewComponentViewName.ToLower()).cshtml.js" asp-append-version="true"></script>
+        <script src="~/js/vc-@(Model.SampleStorageExt.SampleUcViewComponentViewName.ToLower()).cshtml.js" asp-append-version="true"></script>
     }
 }
 @section Breadcrumb{
@@ -21,9 +21,9 @@
         <ol class="breadcrumb lar-breadcrumb">
             <li class="breadcrumb-item"><a asp-page="/Index" asp-area="">首页</a></li>
             <li class="breadcrumb-item"><a asp-page="/Kind" asp-page-handler="-1" asp-area="consign">大类</a></li>
-            <li class="breadcrumb-item"><a asp-page="/Item" asp-page-handler="@Model.SampleId.Substring(0, 2)" asp-area="consign">@Model.KindName</a></li>
-            <li class="breadcrumb-item"><a asp-page="/Sample" asp-page-handler="@Model.SampleId.Substring(0, 4)" asp-area="consign">@Model.ItemName</a></li>
-            <li class="breadcrumb-item active font-weight-bold" aria-current="page">@Model.SampleNameExt</li>
+            <li class="breadcrumb-item"><a asp-page="/Item" asp-page-handler="@Model.SampleStorageExt.SampleId.ToString().Substring(0, 2)" asp-area="consign">@Model.SampleStorageExt.KindName</a></li>
+            <li class="breadcrumb-item"><a asp-page="/Sample" asp-page-handler="@Model.SampleStorageExt.SampleId.ToString().Substring(0, 4)" asp-area="consign">@Model.SampleStorageExt.ItemName</a></li>
+            <li class="breadcrumb-item active font-weight-bold" aria-current="page">@Model.SampleStorageExt.SampleName</li>
         </ol>
     </nav>
 }
@@ -36,10 +36,10 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" asp-for="SampleStorageExt.SpecId">规格</label>
                 </div>
-                <select class="custom-select custom-select-sm @Model.ShowSpecSelect" id="SampleStorageExt_SpecId" name="SampleStorageExt.SpecId" asp-items="Model.Specs">
+                <select class="custom-select custom-select-sm @Model.SampleDetailsPageCtl.ShowSpecSelect" id="SampleStorageExt_SpecId" name="SampleStorageExt.SpecId" asp-items="Model.Specs">
                     <option selected>请选择...</option>
                 </select>
-                <input type="text" class="form-control @Model.ShowSpecManual" id="SampleStorageExt_SpecName" name="SampleStorageExt.SpecName" placeholder="请输入" aria-label="规格">
+                <input type="text" class="form-control @Model.SampleDetailsPageCtl.ShowSpecManual" id="SampleStorageExt_SpecName" name="SampleStorageExt.SpecName" placeholder="请输入" aria-label="规格">
             </div>
         </div>
         <div class="col-6">
@@ -47,10 +47,10 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" asp-for="SampleStorageExt.GradeId">强度/等级</label>
                 </div>
-                <select class="custom-select custom-select-sm @Model.ShowGradeSelect" id="SampleStorageExt_GradeId" name="SampleStorageExt.GradeId" asp-items="Model.Grades">
+                <select class="custom-select custom-select-sm @Model.SampleDetailsPageCtl.ShowGradeSelect" id="SampleStorageExt_GradeId" name="SampleStorageExt.GradeId" asp-items="Model.Grades">
                     <option selected>请选择...</option>
                 </select>
-                <input type="text" class="form-control @Model.ShowGradeManual" id="SampleStorageExt_GradeName" name="SampleStorageExt.GradeName" placeholder="请输入" aria-label="强度/等级">
+                <input type="text" class="form-control @Model.SampleDetailsPageCtl.ShowGradeManual" id="SampleStorageExt_GradeName" name="SampleStorageExt.GradeName" placeholder="请输入" aria-label="强度/等级">
             </div>
         </div>
     </div>
@@ -58,15 +58,15 @@
         <div class="col-12">
             <div class="rounded list-frame-title">检测参数</div>
             <div class="border rounded scroll-checkbox-list-h100">  
-                @foreach (var parm in Model.Parameters)
+                @foreach (var parm in Model.SampleStorageExt.Parameters)
                 {
                 <div class="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" class="custom-control-input" id="chkparm_@parm.ParameterId" name="Parameters[@parm.ParameterId].Checked" 
+                    <input type="checkbox" class="custom-control-input" id="chkparm_@parm.ParameterId" name="SampleStorageExt.Parameters[@parm.ParameterId].Checked" 
                         value="true" @if(parm.IsDefault.Value){@("Checked")}>
                     <label class="custom-control-label" for="chkparm_@parm.ParameterId">@parm.ParameterName</label>
-                    <input type="hidden" name="Parameters[@parm.ParameterId].ParameterName" value="@parm.ParameterName" />
-                    <input type="hidden" name="Parameters[@parm.ParameterId].ParameterId" value="@parm.ParameterId" />
-                    <input type="hidden" name="Parameters.Index" value="@parm.ParameterId" />
+                    <input type="hidden" name="SampleStorageExt.Parameters[@parm.ParameterId].ParameterName" value="@parm.ParameterName" />
+                    <input type="hidden" name="SampleStorageExt.Parameters[@parm.ParameterId].ParameterId" value="@parm.ParameterId" />
+                    <input type="hidden" name="SampleStorageExt.Parameters.Index" value="@parm.ParameterId" />
                 </div>
                 }
             </div>
@@ -79,18 +79,18 @@
                     <label class="input-group-text" asp-for="SampleStorageExt.RecordCertificate">备案证及生产厂家</label>
                 </div>
 
-                <input type="text" class="form-control @Model.ShowProductorSelect" id="searchProductorSearchKey" placeholder="关键字" aria-label="关键字">
+                <input type="text" class="form-control @Model.SampleDetailsPageCtl.ShowProductorSelect" id="searchProductorSearchKey" placeholder="关键字" aria-label="关键字">
 
-                <div class="input-group-prepend @Model.ShowProductorSelect">
+                <div class="input-group-prepend @Model.SampleDetailsPageCtl.ShowProductorSelect">
                     <button class="btn btn-outline-secondary" id="searchProductor" type="button">搜索</button>
                 </div>
 
-                <select class="custom-select custom-select-sm @Model.ShowProductorSelect" id="SampleStorageExt_RecordCertificate" 
+                <select class="custom-select custom-select-sm @Model.SampleDetailsPageCtl.ShowProductorSelect" id="SampleStorageExt_RecordCertificate" 
                     name="SampleStorageExt.RecordCertificate" >
                     <option value="" selected>请选择...</option>
                 </select>
                 <input type="text" class="form-control w-30" id="produceFactory" name="SampleStorageExt.ProduceFactory"
-                    placeholder="生产厂家名称" aria-label="生产厂家" @Model.ReadonlyProductorManual>
+                    placeholder="生产厂家名称" aria-label="生产厂家" @Model.SampleDetailsPageCtl.ReadonlyProductorManual>
             </div>
         </div>
     </div>
@@ -115,14 +115,15 @@
             </div>
         </div>
     </div>
-    @await Component.InvokeAsync(Model.SampleUcViewComponentName, 
-        new {ViewName=Model.SampleUcViewComponentViewName, SampleId=Model.SampleId})
+    @await Component.InvokeAsync(Model.SampleStorageExt.SampleUcDbTableName, 
+        new {ViewName=Model.SampleStorageExt.SampleUcViewComponentViewName, SampleId=Model.SampleStorageExt.SampleId.ToString()})
     <div>
         <button class="btn btn-primary" asp-route-handler="save">保存</button>
     </div>
 </div>
-<input id="hiddenSampleId" name="SampleId" type="hidden" value="@Model.SampleId">
-<input name="KindName" type="hidden" value="@Model.KindName">
-<input name="ItemName" type="hidden" value="@Model.ItemName">
-<input name="SampleNameExt" type="hidden" value="@Model.SampleNameExt">
+<input id="hiddenSampleId" name="SampleStorageExt.SampleId" type="hidden" value="@Model.SampleStorageExt.SampleId">
+<input name="SampleStorageExt.KindName" type="hidden" value="@Model.SampleStorageExt.KindName">
+<input name="SampleStorageExt.ItemName" type="hidden" value="@Model.SampleStorageExt.ItemName">
+<input name="SampleStorageExt.SampleName" type="hidden" value="@Model.SampleStorageExt.SampleName">
+<input name="SampleStorageExt.SampleUcDbTableName" type="hidden" value="@Model.SampleStorageExt.SampleUcDbTableName">
 </form>

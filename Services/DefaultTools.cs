@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace th.onlineconsign.Services
 {
     public class DefaultTools : ITools
@@ -18,6 +20,22 @@ namespace th.onlineconsign.Services
                 }
             }
             return child;
+        }
+
+        public TParent EntityCopyForParent<TChild, TParent>(TChild child) where TParent : new() where TChild : TParent
+        {
+            TParent parent = new TParent();
+            var propChild = typeof(TChild).GetProperties();
+            var propParent = typeof(TParent).GetProperties();
+            foreach (var propertyChild in propChild)
+            {
+                if (propertyChild.CanRead && propertyChild.CanWrite)
+                {
+                    if(propParent.Any(x=>x.Name == propertyChild.Name))
+                        propertyChild.SetValue(parent, propertyChild.GetValue(child, null), null);
+                }
+            }
+            return parent;
         }
     }
 }
