@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using th.onlineconsign.ExtViewModels;
 using th.onlineconsign.Model;
 using th.onlineconsign.Services;
 using static BasePageModelForConsign;
@@ -107,18 +108,17 @@ public partial class SampleDetailsPageModel : BasePageModelForConsign
         await dbSampleStorage.SampleStorageMain.AddAsync(sampleStorageMain);
         var ir = await dbSampleStorage.SaveChangesAsync();
 
+
+        // 临时
+        var sampleStorageAddonGangJin = tools.EntityCopyForParent<SampleStorageAddonGangJinExt, SampleStorageAddonGangJin>(SampleStorageAddonGangJinExt);
+        sampleStorageAddonGangJin.Id = Guid.NewGuid();
+        sampleStorageAddonGangJin.ParentId = sampleStorageMain.Id;
+        sampleStorageAddonGangJin.GjBianMiaoBiaoShiImage = Convert.FromBase64String(SampleStorageAddonGangJinExt.GjBianMiaoBiaoShiImageBase64);
+        await dbSampleStorage.SampleStorageAddonGangJin.AddAsync(sampleStorageAddonGangJin);
+        await dbSampleStorage.SaveChangesAsync();
+
         return RedirectToPage(pageName: "SampleDetails", routeValues: new { handler = sampleStorageMain.SampleId, area = "Consign" });
     }
-}
-public class SampleStorageMainExt : SampleStorageMain
-{
-    public List<ItemParameterExt> Parameters { get; set; }
-    public string SampleUcViewComponentViewName { get; set; }
-}
-
-public class ItemParameterExt : ItemParameter
-{
-    public bool Checked { get; set; }
 }
 
 public class SampleDetailsPageCtl

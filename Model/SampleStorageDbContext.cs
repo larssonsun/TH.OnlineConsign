@@ -15,6 +15,7 @@ namespace th.onlineconsign.Model
         {
         }
 
+        public virtual DbSet<SampleStorageAddonGangJin> SampleStorageAddonGangJin { get; set; }
         public virtual DbSet<SampleStorageAddonDefault> SampleStorageAddonDefault { get; set; }
         public virtual DbSet<SampleStorageMain> SampleStorageMain { get; set; }
 
@@ -151,6 +152,59 @@ namespace th.onlineconsign.Model
                    .IsRequired()
                    .HasMaxLength(128);
            });
+        
+            modelBuilder.Entity<SampleStorageAddonGangJin>(entity =>
+            {
+                entity.ToTable("SampleStorage_Addon_GangJin");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.GjBianMiaoBiaoShi)
+                    .IsRequired()
+                    .HasColumnName("GJ_BianMiaoBiaoShi")
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GjBianMiaoBiaoShiImage)
+                    .IsRequired()
+                    .HasColumnName("Gj_BianMiaoBiaoShi_Image")
+                    .HasColumnType("image");
+
+                entity.Property(e => e.GjRuPiHao)
+                    .IsRequired()
+                    .HasColumnName("Gj_RuPiHao")
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GjTiaoZhiFangshi)
+                    .HasColumnName("Gj_TiaoZhiFangshi")
+                    .HasDefaultValueSql("((-1))");
+
+                entity.Property(e => e.GjWanQuShuLiang).HasColumnName("Gj_WanQuShuLiang");
+
+                entity.Property(e => e.GjXkName)
+                    .IsRequired()
+                    .HasColumnName("Gj_Xk_Name")
+                    .HasMaxLength(1024)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GjXkNo)
+                    .IsRequired()
+                    .HasColumnName("Gj_Xk_No")
+                    .HasMaxLength(128)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GjZhongLiangShuLiang).HasColumnName("Gj_ZhongLiangShuLiang");
+
+                entity.Property(e => e.Memo)
+                    .IsRequired()
+                    .HasMaxLength(512)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ParentId).HasColumnName("ParentID");
+            });
         }
     }
 }

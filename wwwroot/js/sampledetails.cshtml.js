@@ -12,6 +12,7 @@ $(document).ready(function () {
 
     var productorSel = $("#SampleStorageExt_RecordCertificate");
     var productorNameTxt = $("#produceFactory");
+    var productorNameTxtHidden = $("#SampleStorageExt_RecordCertificateHidden");
     // TODO: js / 2019-03-05 14:51 / should addd searchkey validate
     var validateSearchProductor = function () {
         return true;
@@ -42,13 +43,14 @@ $(document).ready(function () {
     // when productor passport sel changed
     productorSel.change(function () {
         productorNameTxt.val($(this).val());
+        productorNameTxtHidden.val($(this).find("option:selected").text());
     });
 
 
     // //   -------------------   // //
     // //   spec and grade name   // //
     // //   -------------------   // //
-    
+
     var specName = $("#SampleStorageExt_SpecName");
     $("#SampleStorageExt_SpecId").change(function () {
         if ($(this).val() == 0)

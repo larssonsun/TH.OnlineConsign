@@ -1,12 +1,12 @@
-@model GangJinViewModel
-@using th.onlineconsign.Components
+@model SampleStorageAddonGangJinExt
+@using th.onlineconsign.ExtViewModels
 <div class="form-row">
     <div class="col-12">
         <div class="input-group input-group-sm mb-3">
             <div class="input-group-prepend">
                 <label class="input-group-text" for="Gj_RuPiHao">炉批号</label>
             </div>
-            <input type="text" class="form-control" id="Gj_RuPiHao" placeholder="请输入" aria-label="炉批号">
+            <input type="text" class="form-control" id="Gj_RuPiHao" name="SampleStorageAddonGangJinExt.GjRuPiHao" placeholder="请输入" aria-label="炉批号">
         </div>
     </div>
 </div>
@@ -16,7 +16,7 @@
             <div class="input-group-prepend">
                 <label class="input-group-text" for="JianCeShuLiang">拉伸数量</label>
             </div>
-            <input type="number" class="form-control" id="JianCeShuLiang" min="1" step="1" placeholder="请输入" aria-label="拉伸数量" onblur="value=value.replace(/^(0+)|[^\d]+/g,'')">
+            <input type="number" class="form-control" id="JianCeShuLiang" name="SampleStorageAddonGangJinExt.JianCeShuLiang" min="1" step="1" placeholder="请输入" aria-label="拉伸数量" onblur="value=value.replace(/^(0+)|[^\d]+/g,'')">
         </div>
     </div>
     <div class="col-4">
@@ -24,7 +24,7 @@
             <div class="input-group-prepend">
                 <label class="input-group-text" for="Gj_WanQuShuLiang">弯曲数量</label>
             </div>
-            <input type="number" class="form-control" id="Gj_WanQuShuLiang" min="1" step="1" placeholder="请输入" aria-label="弯曲数量" onblur="value=value.replace(/^(0+)|[^\d]+/g,'')">
+            <input type="number" class="form-control" id="Gj_WanQuShuLiang" name="SampleStorageAddonGangJinExt.GjWanQuShuLiang" min="1" step="1" placeholder="请输入" aria-label="弯曲数量" onblur="value=value.replace(/^(0+)|[^\d]+/g,'')">
         </div>
     </div>
     <div class="col-4">
@@ -33,7 +33,8 @@
                 <label class="input-group-text" for="GJ_BianMiaoBiaoShi">表面标识</label>
             </div>
             <img class="image-inline" src="" alt="" id="Gj_BianMiaoBiaoShi_Image">
-            <input type="text" for="GJ_BianMiaoBiaoShi" class="form-control" id="GJ_BianMiaoBiaoShi_GangJinZlXkz" placeholder="" aria-label="表面标识" readonly>
+            <input type="hidden" id="GJ_BianMiaoBiaoShi_ImageHidden"  name="SampleStorageAddonGangJinExt.GjBianMiaoBiaoShiImageBase64">
+            <input type="text" for="GJ_BianMiaoBiaoShi" class="form-control" id="GJ_BianMiaoBiaoShi_GangJinZlXkz" name="SampleStorageAddonGangJinExt.GJBianMiaoBiaoShi" placeholder="" aria-label="表面标识" readonly>
         </div>
     </div>
 </div>
@@ -46,7 +47,8 @@
             <select class="custom-select custom-select-sm" id="Gj_Xk_No" disabled>
                 <option value="" selected>请选择...</option>
             </select>
-            <input type="text" class="form-control w-30" id="Gj_Xk_Name" 
+            <input type="hidden" id="Gj_Xk_NoHidden" name="SampleStorageAddonGangJinExt.GjXkNo">
+            <input type="text" class="form-control w-30" id="Gj_Xk_Name" name="SampleStorageAddonGangJinExt.GjXkName"
                 placeholder="生产厂家名称" aria-label="生产厂家" readonly>
         </div>
     </div>
@@ -57,7 +59,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text fs0875">样品备注</span>
             </div>
-            <textarea class="form-control fs0875" id="Memo" placeholder="请输入" aria-label="样品备注"></textarea>
+            <textarea class="form-control fs0875" id="Memo" name="SampleStorageAddonGangJinExt.Memo" placeholder="请输入" aria-label="样品备注"></textarea>
         </div>
     </div>
 </div>

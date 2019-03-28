@@ -85,10 +85,10 @@
                     <button class="btn btn-outline-secondary" id="searchProductor" type="button">搜索</button>
                 </div>
 
-                <select class="custom-select custom-select-sm @Model.SampleDetailsPageCtl.ShowProductorSelect" id="SampleStorageExt_RecordCertificate" 
-                    name="SampleStorageExt.RecordCertificate" >
+                <select class="custom-select custom-select-sm @Model.SampleDetailsPageCtl.ShowProductorSelect" id="SampleStorageExt_RecordCertificate">
                     <option value="" selected>请选择...</option>
                 </select>
+                <input type="hidden" id="SampleStorageExt_RecordCertificateHidden" name="SampleStorageExt.RecordCertificate">
                 <input type="text" class="form-control w-30" id="produceFactory" name="SampleStorageExt.ProduceFactory"
                     placeholder="生产厂家名称" aria-label="生产厂家" @Model.SampleDetailsPageCtl.ReadonlyProductorManual>
             </div>

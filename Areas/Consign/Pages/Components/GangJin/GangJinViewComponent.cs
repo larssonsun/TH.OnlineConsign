@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using th.onlineconsign.ExtViewModels;
 using th.onlineconsign.Model;
 using th.onlineconsign.Services;
 
@@ -14,7 +15,9 @@ namespace th.onlineconsign.Components
     {
         ItemDbContext db;
         ISampleUcControler sampleUcControler;
-        
+
+        public SampleStorageAddonGangJinExt SampleStorageAddonGangJinExt { get; set; } = new SampleStorageAddonGangJinExt();
+
         public GangJinViewComponent(ItemDbContext db, ISampleUcControler service1)
         {
             this.db = db;
@@ -25,13 +28,10 @@ namespace th.onlineconsign.Components
         {
             return await Task<IViewComponentResult>.Run(() =>
             {
-                return View(viewName, new GangJinViewModel {  });
+                return View(viewName, SampleStorageAddonGangJinExt);
             });
         }
     }
 
-    public class GangJinViewModel
-    {
-        // public bool UseXkzForGangJin { get; set; }
-    }
+    
 }
