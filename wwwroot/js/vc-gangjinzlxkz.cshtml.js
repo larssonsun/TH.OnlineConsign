@@ -19,6 +19,7 @@ $(document).ready(function () {
         $.getJSON("/Consign/SampleDetails/SearchXkz?putOnRecordsPassport=" + encodeURI(porp.text()), function (data) {
             xkzSel.children("option:gt(0)").remove();
             xkzProducerName.val("");
+            xkzSelTxt.val("");
             if (data) {
                 if (data.length <= 1)
                     xkzSel.attr("disabled", true);
@@ -26,12 +27,14 @@ $(document).ready(function () {
                     xkzSel.attr("disabled", false);
                 $.each(data, function (i, elm) {
                     xkzSel.append("<option value=" + elm.name + (i == 0 ? " selected>" : ">") + elm.putOnRecordsPassport + "</option>");
-                    if (i == 0)
+                    if (i == 0) {
                         xkzProducerName.val(elm.name);
+                        xkzSelTxt.val(elm.putOnRecordsPassport);
+                    }
                 });
                 xkzSel.change();
             }
-            
+
         }, function (XMLHttpRequest, textStatus) {
             alert(textStatus);
         });

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -106,21 +107,21 @@ public partial class SampleDetailsPageModel : BasePageModelForConsign
 
         sampleStorageMain.ExamParameterCn = parmNames;
         await dbSampleStorage.SampleStorageMain.AddAsync(sampleStorageMain);
-        var ir = await dbSampleStorage.SaveChangesAsync();
 
+        MethodInfo methodInfo = GetType().GetMethod($"{sampleStorageMain.SampleUcDbTableName}_AddonSave");
+        if (methodInfo != null)
+        {
+            await Task.Run(() =>
+            {
+                methodInfo.Invoke(this, new object[] { sampleStorageMain.Id });
+            });
 
-        // 临时
-        var sampleStorageAddonGangJin = tools.EntityCopyForParent<SampleStorageAddonGangJinExt, SampleStorageAddonGangJin>(SampleStorageAddonGangJinExt);
-        sampleStorageAddonGangJin.Id = Guid.NewGuid();
-        sampleStorageAddonGangJin.ParentId = sampleStorageMain.Id;
-        sampleStorageAddonGangJin.GjBianMiaoBiaoShiImage = Convert.FromBase64String(SampleStorageAddonGangJinExt.GjBianMiaoBiaoShiImageBase64);
-        await dbSampleStorage.SampleStorageAddonGangJin.AddAsync(sampleStorageAddonGangJin);
-        await dbSampleStorage.SaveChangesAsync();
+            var ir = await dbSampleStorage.SaveChangesAsync();
 
+        }
         return RedirectToPage(pageName: "SampleDetails", routeValues: new { handler = sampleStorageMain.SampleId, area = "Consign" });
     }
 }
-
 public class SampleDetailsPageCtl
 {
     public ShowHideCssClass ShowSpecManual { get; set; }
@@ -139,4 +140,5 @@ public class SampleDetailsPageCtl
 
     public bool IfShouldAddScript { get; set; }
 }
+
 

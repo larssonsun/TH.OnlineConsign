@@ -27,11 +27,15 @@ $(document).ready(function () {
         $.getJSON("/Consign/SampleDetails/SearchProductor?sampleid=" + sampleId + "&searchkey=" + encodeURI(searchProductorSearchKey), function (data) {
             productorSel.children("option:gt(0)").remove();
             productorNameTxt.val("");
+            productorNameTxtHidden.val("");
             if (data) {
                 $.each(data, function (i, elm) {
                     productorSel.append("<option value=" + elm.name + (i == 0 ? " selected>" : ">") + elm.putOnRecordsPassport + "</option > ");
                     if (i == 0)
+                    {
                         productorNameTxt.val(elm.name);
+                        productorNameTxtHidden.val(elm.putOnRecordsPassport);
+                    }
                 });
                 productorSel.change();
             }
